@@ -1,0 +1,20 @@
+{% set pagina = request.endpoint %}
+<header class="topo">
+  <div class="listra"></div>
+  <nav class="container nav" aria-label="Principal">
+    <a class="nav__marca" href="{{ url_for('main.index') }}">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true">
+        <circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4 8.12 15.88M14.47 14.48 20 20M8.12 8.12 12 12"/>
+      </svg>
+      {{ barbearia.nome }}
+    </a>
+    <button class="nav__menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">☰</button>
+    <ul class="nav__links" id="menu">
+      <li><a href="{{ url_for('main.index') }}" class="{{ 'ativo' if pagina == 'main.index' }}">Início</a></li>
+      <li><a href="{{ url_for('main.sobre') }}" class="{{ 'ativo' if pagina == 'main.sobre' }}">Sobre</a></li>
+      <li><a href="{{ url_for('main.servicos') }}" class="{{ 'ativo' if pagina == 'main.servicos' }}">Serviços</a></li>
+      <li><a href="{{ url_for('main.avaliacoes') }}" class="{{ 'ativo' if pagina == 'main.avaliacoes' }}">Avaliações</a></li>
+      <li><a href="{{ url_for('main.agendamento') }}" class="btn btn--pequeno">Agendar horário</a></li>
+    </ul>
+  </nav>
+</header>

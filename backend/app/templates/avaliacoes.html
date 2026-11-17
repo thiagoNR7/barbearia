@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% from "partials/estrelas.html" import estrelas %}
+{% block titulo %}Avaliações · {{ barbearia.nome }}{% endblock %}
+
+{% block conteudo %}
+<section class="cabecalho-pagina">
+  <div class="container">
+    <span class="sobretitulo">Avaliações</span>
+    <h1>O que dizem nossos clientes</h1>
+    <p>Já cortou com a gente? Conta pra galera como foi.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    {% if media %}
+      <div class="resumo-nota">
+        <div class="resumo-nota__valor">{{ "%.1f"|format(media) }}</div>
+        <div>
+          {{ estrelas(media) }}<br>
+          <span class="texto-pequeno">{{ total }} avaliaç{{ 'ão' if total == 1 else 'ões' }}</span>
+        </div>
+      </div>
+    {% endif %}
+
+    <div class="grade grade--2" style="align-items:start">
+      <div class="grade" style="gap:1rem">
+        {% for a in avaliacoes %}
+          <article class="card avaliacao">
+            {{ estrelas(a.nota) }}
+            <blockquote>“{{ a.comentario }}”</blockquote>
+            <footer><strong>{{ a.nome }}</strong> · {{ a.criado_em|data_br }}</footer>
+          </article>
+        {% else %}
+          <p class="vazio">Ainda não há avaliações. Seja o primeiro!</p>
+        {% endfor %}
+      </div>
+
+      <form class="card form" method="post" style="position:sticky;top:90px">
+        <h3>Deixe sua avaliação</h3>
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <div class="oculto-robo" aria-hidden="true">
+          <label for="campo-site">Não preencha</label>
+          <input type="text" id="campo-site" name="site" tabindex="-1" autocomplete="off">
+        </div>
+        <div class="campo">
+          <label for="av-nome">Seu nome</label>
+          <input type="text" id="av-nome" name="nome" maxlength="80" required value="{{ form.get('nome', '') }}">
+        </div>
+        <div class="campo">
+          <span class="rotulo" id="rotulo-nota">Nota</span>
+          <div class="seletor-estrelas" role="radiogroup" aria-labelledby="rotulo-nota">
+            {% for n in range(5, 0, -1) %}
+              <input type="radio" id="nota-{{ n }}" name="nota" value="{{ n }}" {{ 'checked' if form.get('nota')|string == n|string }} required>
+              <label for="nota-{{ n }}" title="{{ n }} estrela{{ 's' if n > 1 }}">★</label>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="campo">
+          <label for="av-comentario">Comentário</label>
+          <textarea id="av-comentario" name="comentario" maxlength="1000" rows="4" required>{{ form.get('comentario', '') }}</textarea>
+        </div>
+        <button class="btn" type="submit">Enviar avaliação</button>
+      </form>
+    </div>
+  </div>
+</section>
+{% endblock %}

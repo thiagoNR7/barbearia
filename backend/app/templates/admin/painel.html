@@ -1,0 +1,66 @@
+{% extends "admin/base.html" %}
+
+{% block admin %}
+<div class="indicadores">
+  <div class="card indicador"><span>Atendimentos hoje</span><strong>{{ indicadores.hoje }}</strong></div>
+  <div class="card indicador"><span>Próximos 7 dias</span><strong>{{ indicadores.semana }}</strong></div>
+  <div class="card indicador"><span>Faturado no mês</span><strong>{{ indicadores.faturado_mes|moeda }}</strong></div>
+  <div class="card indicador"><span>Previsto no mês</span><strong>{{ indicadores.previsto_mes|moeda }}</strong></div>
+</div>
+
+<div class="admin__topo">
+  <h1>{{ dia|dia_semana }}, {{ dia|data_br }}</h1>
+  <div class="navegador-dia">
+    <a class="btn btn--pequeno btn--contorno" href="{{ url_for('admin.painel', data=dia_anterior.isoformat()) }}" aria-label="Dia anterior">←</a>
+    <form method="get" action="{{ url_for('admin.painel') }}">
+      <input type="date" name="data" value="{{ dia.isoformat() }}" onchange="this.form.submit()" aria-label="Ir para a data">
+    </form>
+    <a class="btn btn--pequeno btn--contorno" href="{{ url_for('admin.painel', data=dia_seguinte.isoformat()) }}" aria-label="Próximo dia">→</a>
+    <a class="btn btn--pequeno btn--contorno" href="{{ url_for('admin.painel') }}">Hoje</a>
+    <a class="btn btn--pequeno" href="{{ url_for('admin.novo_agendamento', data=dia.isoformat()) }}">+ Novo agendamento</a>
+  </div>
+</div>
+
+{% if bloqueio %}
+  <p class="mensagem mensagem--erro">Dia bloqueado{{ ': ' ~ bloqueio.motivo if bloqueio.motivo }}. Clientes não conseguem agendar nesta data.</p>
+{% endif %}
+
+<div class="tabela-wrap">
+  <table class="tabela">
+    <thead>
+      <tr><th>Horário</th><th>Cliente</th><th>Serviço</th><th class="num">Valor</th><th>Status</th><th>Ações</th></tr>
+    </thead>
+    <tbody>
+      {% for ag in agendamentos %}
+        <tr class="{{ 'inativo' if ag.status == 'cancelado' }}">
+          <td><strong>{{ ag.inicio|hora }}</strong><br><small class="texto-pequeno">até {{ ag.fim|hora }}</small></td>
+          <td>
+            {{ ag.cliente.nome }}<br>
+            <a class="texto-pequeno" href="https://wa.me/55{{ ag.cliente.telefone }}" target="_blank" rel="noopener">{{ ag.cliente.telefone_formatado }}</a>
+            {% if ag.observacao %}<br><small class="texto-pequeno">“{{ ag.observacao }}”</small>{% endif %}
+          </td>
+          <td>{{ ag.servico.nome }}</td>
+          <td class="num">{{ ag.preco|moeda }}</td>
+          <td><span class="etiqueta etiqueta--{{ ag.status }}">{{ ag.status_label }}</span></td>
+          <td>
+            <div class="acoes-linha">
+              {% for chave, rotulo in [('concluido', 'Concluir'), ('faltou', 'Faltou'), ('cancelado', 'Cancelar'), ('confirmado', 'Reabrir')] %}
+                {% if ag.status != chave and not (chave == 'confirmado' and ag.status == 'concluido') %}
+                  <form method="post" action="{{ url_for('admin.mudar_status', ag_id=ag.id) }}"
+                        {% if chave == 'cancelado' %}data-confirmar="Cancelar o horário de {{ ag.cliente.nome }}?"{% endif %}>
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                    <input type="hidden" name="status" value="{{ chave }}">
+                    <button class="btn btn--pequeno {{ 'btn--contorno' if chave != 'concluido' }}" type="submit">{{ rotulo }}</button>
+                  </form>
+                {% endif %}
+              {% endfor %}
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" class="vazio">Nenhum agendamento para este dia.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

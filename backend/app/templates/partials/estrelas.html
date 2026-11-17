@@ -1,0 +1,5 @@
+{% macro estrelas(nota) -%}
+<span class="estrelas" aria-label="{{ nota }} de 5 estrelas">
+  {%- for i in range(1, 6) -%}<span class="{{ '' if i <= nota else 'apagada' }}">★</span>{%- endfor -%}
+</span>
+{%- endmacro %}

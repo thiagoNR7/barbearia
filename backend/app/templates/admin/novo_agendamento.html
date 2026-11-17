@@ -1,0 +1,14 @@
+{% extends "admin/base.html" %}
+
+{% block admin %}
+<div class="admin__topo">
+  <h1>Novo agendamento</h1>
+  <a href="{{ url_for('admin.painel') }}">← voltar para a agenda</a>
+</div>
+{% set modo_barbeiro = true %}
+{% include "partials/form_agendamento.html" %}
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/agendamento.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block titulo %}Sobre · {{ barbearia.nome }}{% endblock %}
+
+{% block conteudo %}
+<section class="cabecalho-pagina">
+  <div class="container">
+    <span class="sobretitulo">Sobre nós</span>
+    <h1>{{ barbearia.nome }}</h1>
+    <p>Uma barbearia de bairro, com atendimento de quem conhece o cliente pelo nome.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container grade grade--2">
+    <div>
+      <h2>Nossa história</h2>
+      {# Substitua este texto pela história real do barbeiro #}
+      <p class="texto-suave">Tudo começou com uma cadeira, uma máquina e muita vontade de fazer um trabalho bem feito. Com o tempo, a clientela cresceu no boca a boca e a barbearia virou ponto de encontro da vizinhança.</p>
+      <p class="texto-suave">Aqui o foco é simples: corte bem feito, conversa boa e pontualidade. Por isso trabalhamos com hora marcada — você chega e é atendido, sem perder a tarde esperando.</p>
+      <div class="destaques">
+        <div class="destaque"><strong>10+</strong><span>anos de experiência</span></div>
+        <div class="destaque"><strong>100%</strong><span>hora marcada</span></div>
+        <div class="destaque"><strong>☕</strong><span>cafezinho por conta da casa</span></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>Horário de funcionamento</h3>
+      <table class="tabela-horarios">
+        {% for h in horarios %}
+          <tr class="{{ 'hoje' if h.dia_semana == dia_hoje }}">
+            <td>{{ h.nome_dia }}</td>
+            <td>
+              {% if h.aberto %}
+                {{ h.abertura.strftime('%H:%M') }} – {{ h.fechamento.strftime('%H:%M') }}
+                {% if h.pausa_inicio %}<br><small class="texto-pequeno">pausa {{ h.pausa_inicio.strftime('%H:%M') }}–{{ h.pausa_fim.strftime('%H:%M') }}</small>{% endif %}
+              {% else %}
+                Fechado
+              {% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </table>
+      <h3 style="margin-top:1.75rem">Onde estamos</h3>
+      <p class="texto-suave">{{ barbearia.endereco }}</p>
+      <iframe class="mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              title="Mapa com a localização da barbearia"
+              src="https://www.google.com/maps?q={{ barbearia.endereco|urlencode }}&output=embed"></iframe>
+    </div>
+  </div>
+</section>
+{% endblock %}

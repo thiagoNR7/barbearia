@@ -1,0 +1,65 @@
+{% extends "admin/base.html" %}
+
+{% block admin %}
+<div class="admin__topo"><h1>Horário de funcionamento</h1></div>
+
+<form method="post" action="{{ url_for('admin.horarios') }}" style="margin-bottom:2.5rem">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  <div class="tabela-wrap">
+    <table class="tabela">
+      <thead>
+        <tr><th>Dia</th><th>Abre?</th><th>Abertura</th><th>Fechamento</th><th>Pausa (início)</th><th>Pausa (fim)</th></tr>
+      </thead>
+      <tbody>
+        {% for h in expedientes %}
+          {% set p = 'd' ~ h.dia_semana ~ '_' %}
+          <tr>
+            <td><strong>{{ h.nome_dia }}</strong></td>
+            <td><input type="checkbox" name="{{ p }}aberto" {{ 'checked' if h.aberto }} aria-label="{{ h.nome_dia }} aberto"></td>
+            <td><input type="time" name="{{ p }}abertura" value="{{ h.abertura.strftime('%H:%M') }}"></td>
+            <td><input type="time" name="{{ p }}fechamento" value="{{ h.fechamento.strftime('%H:%M') }}"></td>
+            <td><input type="time" name="{{ p }}pausa_inicio" value="{{ h.pausa_inicio.strftime('%H:%M') if h.pausa_inicio else '' }}"></td>
+            <td><input type="time" name="{{ p }}pausa_fim" value="{{ h.pausa_fim.strftime('%H:%M') if h.pausa_fim else '' }}"></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <p class="texto-pequeno" style="margin-top:.75rem">Deixe a pausa em branco se não houver intervalo. Agendamentos já marcados não são alterados.</p>
+  <button class="btn" type="submit">Salvar horários</button>
+</form>
+
+<div class="grade grade--2" style="align-items:start">
+  <form class="card form" method="post" action="{{ url_for('admin.adicionar_bloqueio') }}">
+    <h3>Bloquear um dia</h3>
+    <p class="texto-pequeno">Feriado, folga, curso… Nesse dia ninguém consegue agendar pelo site.</p>
+    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+    <div class="form__linha">
+      <div class="campo">
+        <label for="bloq-data">Data</label>
+        <input type="date" id="bloq-data" name="data" min="{{ hoje.isoformat() }}" required>
+      </div>
+      <div class="campo">
+        <label for="bloq-motivo">Motivo (aparece para o cliente)</label>
+        <input type="text" id="bloq-motivo" name="motivo" maxlength="120" placeholder="Feriado">
+      </div>
+    </div>
+    <div><button class="btn" type="submit">Bloquear dia</button></div>
+  </form>
+
+  <div class="card">
+    <h3>Próximos dias bloqueados</h3>
+    {% for b in bloqueios %}
+      <div class="acoes-linha" style="justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--linha)">
+        <span>{{ b.data|dia_semana }}, {{ b.data|data_br }}{{ ' — ' ~ b.motivo if b.motivo }}</span>
+        <form method="post" action="{{ url_for('admin.remover_bloqueio', bloqueio_id=b.id) }}">
+          <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+          <button class="btn btn--pequeno btn--contorno" type="submit">Desbloquear</button>
+        </form>
+      </div>
+    {% else %}
+      <p class="texto-pequeno">Nenhum dia bloqueado.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

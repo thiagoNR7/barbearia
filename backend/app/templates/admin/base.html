@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+{% block titulo %}Painel · {{ barbearia.nome }}{% endblock %}
+
+{% block navbar %}
+{% set pagina = request.endpoint %}
+<header class="topo">
+  <div class="listra"></div>
+  <nav class="container nav" aria-label="Painel">
+    <a class="nav__marca" href="{{ url_for('admin.painel') }}">💈 Painel do barbeiro</a>
+    {% if session.get('admin') %}
+      <button class="nav__menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">☰</button>
+      <ul class="nav__links" id="menu">
+        <li><a href="{{ url_for('admin.painel') }}" class="{{ 'ativo' if pagina in ('admin.painel', 'admin.novo_agendamento') }}">Agenda</a></li>
+        <li><a href="{{ url_for('admin.servicos') }}" class="{{ 'ativo' if pagina == 'admin.servicos' }}">Serviços</a></li>
+        <li><a href="{{ url_for('admin.horarios') }}" class="{{ 'ativo' if pagina == 'admin.horarios' }}">Horários</a></li>
+        <li><a href="{{ url_for('admin.clientes') }}" class="{{ 'ativo' if pagina == 'admin.clientes' }}">Clientes</a></li>
+        <li><a href="{{ url_for('admin.avaliacoes') }}" class="{{ 'ativo' if pagina == 'admin.avaliacoes' }}">Avaliações</a></li>
+        <li><a href="{{ url_for('main.index') }}" target="_blank">Ver site ↗</a></li>
+        <li>
+          <form method="post" action="{{ url_for('admin.logout') }}">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="link-botao" type="submit">Sair</button>
+          </form>
+        </li>
+      </ul>
+    {% endif %}
+  </nav>
+</header>
+{% endblock %}
+
+{% block rodape %}{% endblock %}
+
+{% block conteudo %}
+<div class="container admin">
+  {% block admin %}{% endblock %}
+</div>
+{% endblock %}

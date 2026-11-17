@@ -8,161 +8,172 @@
 
 ## 📌 Sobre o projeto
 
-Projeto acadêmico de desenvolvimento de um site para uma barbearia, com apresentação de serviços, avaliações de clientes e sistema de agendamento online.
+Projeto acadêmico de desenvolvimento de um site para uma barbearia de bairro, com apresentação de serviços, avaliações de clientes, agendamento online e um **painel para o barbeiro** gerenciar a agenda.
+
+## ✨ Funcionalidades
+
+**Para o cliente**
+- 🏠 Página inicial, página "Sobre" com horário de funcionamento e mapa.
+- ✂️ Catálogo de serviços com preço e duração.
+- 📅 Agendamento em 3 passos: serviço → dia/horário → dados. Só aparecem horários realmente livres.
+- 🔗 Link de confirmação com os detalhes, botão para avisar no WhatsApp e **cancelamento pelo próprio cliente** (até 2 h antes).
+- ⭐ Avaliações com nota de 1 a 5 estrelas (com proteção simples contra spam).
+
+**Para o barbeiro (`/admin`)**
+- 📋 Agenda do dia com navegação entre datas e indicadores (atendimentos hoje, próximos 7 dias, faturado e previsto no mês).
+- ✅ Marcar atendimento como concluído, cancelado ou "não compareceu".
+- ➕ Registrar agendamentos feitos por telefone/WhatsApp ou encaixes na hora.
+- 💲 Cadastrar, editar e ocultar serviços (o preço de agendamentos antigos é preservado).
+- 🕘 Configurar horário de cada dia da semana, pausa de almoço e bloquear dias (feriados, folgas).
+- 👥 Lista de clientes com número de atendimentos e busca.
+- 🛡️ Moderar avaliações (ocultar/excluir).
+
+**Regras de negócio**
+- 🔒 Nenhum horário pode se sobrepor a outro (considera a duração de cada serviço).
+- Respeita expediente, pausa, dias fechados, dias bloqueados, antecedência mínima (30 min) e máxima (30 dias).
+- O cliente é identificado pelo telefone: quem agenda de novo com o mesmo número é o mesmo cliente.
+- Proteção CSRF em todos os formulários e na API.
 
 ## 🚀 Tecnologias utilizadas
 
 | Tecnologia | Aplicação |
 |---|---|
-| HTML5 | Estrutura das páginas |
-| CSS3 | Estilização e layout |
-| JavaScript | Interatividade |
-| Python | Desenvolvimento do backend |
-| Flask | Framework web |
-| SQLite | Banco de dados durante o desenvolvimento |
-| PostgreSQL | Banco de dados em produção |
-| Flask-SQLAlchemy | Integração com o banco de dados |
+| HTML5, CSS3, JavaScript | Páginas, estilo e interatividade (sem frameworks) |
+| Python + Flask | Backend |
+| Jinja2 | Templates com navbar/rodapé compartilhados |
+| Flask-SQLAlchemy | Acesso ao banco de dados |
+| SQLite / PostgreSQL | Banco em desenvolvimento / produção |
+| pytest | Testes automatizados |
 | Git e GitHub | Versionamento e colaboração |
-| Render | Hospedagem da aplicação |
+| Render + Gunicorn | Hospedagem |
 
-## ✨ Funcionalidades
+## ▶️ Como rodar na sua máquina
 
-- 🏠 Página inicial e apresentação da barbearia.
-- ℹ️ Página institucional.
-- ✂️ Catálogo de serviços, preços e duração.
-- 📅 Sistema de agendamento de cortes.
-- ⭐ Exibição de avaliações dos clientes.
-- 🔒 Validação de horários e prevenção de agendamentos duplicados.
+Pré-requisitos: [Python 3.10+](https://www.python.org/downloads/) e [Git](https://git-scm.com/).
+
+```bash
+# 1. Baixar o projeto
+git clone https://github.com/Jerrypro07/Barbearia_projeto.git
+cd Barbearia_projeto/backend
+
+# 2. Criar e ativar um ambiente virtual
+python -m venv venv
+venv\Scripts\activate          # Windows
+# source venv/bin/activate     # Linux/Mac
+
+# 3. Instalar as dependências
+pip install -r requirements.txt
+
+# 4. Criar o arquivo de configuração
+copy .env.example .env         # Windows
+# cp .env.example .env         # Linux/Mac
+
+# 5. Rodar
+python run.py
+```
+
+Abra **http://127.0.0.1:5000**. Na primeira execução o banco (`backend/instance/barbearia.db`) é criado com serviços, horários e avaliações de exemplo.
+
+Painel do barbeiro: **http://127.0.0.1:5000/admin** — usuário e senha são os definidos em `ADMIN_USUARIO` e `ADMIN_SENHA` no `.env`.
+
+Comandos úteis (dentro de `backend/`, com o venv ativo):
+
+```bash
+flask --app run reset-db      # apaga e recria o banco com os dados de exemplo
+python -m pytest -v           # roda os testes (antes: pip install -r requirements-dev.txt)
+```
 
 ## 📁 Estrutura do projeto
 
 ```text
-barbearia/
-│
+Barbearia_projeto/
 ├── backend/
 │   ├── app/
-│   │   ├── __init__.py
-│   │   ├── config.py
-│   │   ├── models.py
-│   │   ├── routes.py
-│   │   │
+│   │   ├── __init__.py        # cria a aplicação, CSRF, filtros, dados iniciais
+│   │   ├── config.py          # configurações (lidas do .env)
+│   │   ├── models.py          # tabelas do banco
+│   │   ├── agenda.py          # regras: horários livres, validação, criação
+│   │   ├── routes.py          # páginas públicas e API
+│   │   ├── admin.py           # painel do barbeiro
 │   │   ├── templates/
-│   │   │   ├── base.html
-│   │   │   ├── index.html
-│   │   │   ├── sobre.html
-│   │   │   ├── servicos.html
-│   │   │   ├── agendamento.html
-│   │   │   ├── avaliacoes.html
-│   │   │   └── partials/
-│   │   │       ├── navbar.html
-│   │   │       └── footer.html
-│   │   │
+│   │   │   ├── base.html, index.html, sobre.html, servicos.html,
+│   │   │   ├── agendamento.html, confirmacao.html, avaliacoes.html, erro.html
+│   │   │   ├── partials/      # navbar, rodapé, estrelas, formulário de agendamento
+│   │   │   └── admin/         # telas do painel
 │   │   └── static/
-│   │       ├── css/
-│   │       │   └── style.css
-│   │       ├── js/
-│   │       │   ├── main.js
-│   │       │   └── agendamento.js
+│   │       ├── css/style.css
+│   │       ├── js/main.js, agendamento.js
 │   │       └── img/
-│   │           ├── logo.png
-│   │           ├── banner.jpg
-│   │           └── servicos/
-│   │
+│   ├── tests/test_agendamento.py
 │   ├── requirements.txt
+│   ├── requirements-dev.txt
 │   ├── run.py
 │   └── .env.example
-│
-├── .gitignore
-├── README.md
-└── render.yaml
+├── render.yaml
+└── README.md
 ```
-
-## ⚙️ Organização do backend
-
-| Arquivo | Responsabilidade |
-|---|---|
-| `__init__.py` | Inicialização da aplicação Flask |
-| `config.py` | Configurações do sistema |
-| `models.py` | Modelos e tabelas do banco de dados |
-| `routes.py` | Rotas e funcionalidades |
-| `run.py` | Inicialização do servidor |
-
-## 🌐 Páginas do sistema
-
-| Página | Descrição |
-|---|---|
-| `index.html` | Página inicial |
-| `sobre.html` | Apresentação da barbearia |
-| `servicos.html` | Serviços e preços |
-| `agendamento.html` | Formulário de agendamento |
-| `avaliacoes.html` | Avaliações dos clientes |
-
-> **Templates:** utilizaremos Jinja2 para compartilhar componentes, como menu de navegação e rodapé, evitando a repetição de código HTML.[OPCIONAL]
 
 ## 🗄️ Banco de dados
 
-A aplicação utilizará SQLAlchemy para gerenciar a comunicação com o banco de dados.
-
-### Tabelas principais
+```text
+clientes 1 ──── N agendamentos N ──── 1 servicos
+clientes 1 ──── N avaliacoes
+horarios_funcionamento  (um registro por dia da semana)
+dias_bloqueados         (feriados e folgas)
+```
 
 | Tabela | Descrição |
 |---|---|
-| `clientes` | Dados dos clientes |
-| `servicos` | Serviços, preços e duração |
-| `agendamentos` | Datas, horários e status |
-| `avaliacoes` | Notas e comentários dos clientes |
+| `clientes` | Nome, telefone (único) e e-mail |
+| `servicos` | Nome, descrição, preço, duração, ativo/oculto |
+| `agendamentos` | Cliente, serviço, início, fim, preço cobrado, status (`confirmado`, `concluido`, `cancelado`, `faltou`) e código do link de confirmação |
+| `avaliacoes` | Nome, nota (1–5, com CHECK no banco), comentário, visível |
+| `horarios_funcionamento` | Abertura, fechamento e pausa de cada dia |
+| `dias_bloqueados` | Datas sem atendimento e motivo |
 
-Os relacionamentos serão definidos por meio de chaves primárias (PK) e estrangeiras (FK).
-
-O sistema também deverá verificar a disponibilidade dos horários e o funcionamento da barbearia antes de confirmar um agendamento.
-
-## 🔗 Principais rotas
+## 🔗 Rotas
 
 | Método | Rota | Funcionalidade |
 |---|---|---|
 | GET | `/` | Página inicial |
-| GET | `/sobre` | Página sobre |
-| GET | `/servicos` | Listagem de serviços |
-| GET/POST | `/agendamento` | Agendamento |
-| GET | `/avaliacoes` | Exibição de avaliações |
-| POST | `/api/agendamentos` | Registrar agendamento |
-| GET | `/api/servicos` | Consultar serviços |
+| GET | `/sobre` | Sobre, horários e mapa |
+| GET | `/servicos` | Serviços e preços |
+| GET/POST | `/agendamento` | Formulário de agendamento |
+| GET | `/agendamento/<codigo>` | Confirmação do agendamento |
+| POST | `/agendamento/<codigo>/cancelar` | Cancelamento pelo cliente |
+| GET/POST | `/avaliacoes` | Ver e enviar avaliações |
+| GET | `/api/servicos` | Lista de serviços (JSON) |
+| GET | `/api/horarios?data=AAAA-MM-DD&servico_id=1` | Horários livres (JSON) |
+| POST | `/api/agendamentos` | Criar agendamento (JSON) |
+| GET | `/admin/` | Painel: agenda do dia |
+| — | `/admin/servicos`, `/admin/horarios`, `/admin/clientes`, `/admin/avaliacoes` | Gestão |
 
-## 📦 Dependências Python
+Exemplo de `POST /api/agendamentos` (precisa do cabeçalho `X-CSRF-Token`, que o site já envia):
 
-As dependências serão gerenciadas pelo arquivo `requirements.txt`.
-
-```txt
-Flask
-Flask-SQLAlchemy
-Flask-Migrate
-python-dotenv
-psycopg2-binary
-gunicorn
+```json
+{ "nome": "João", "telefone": "(11) 91234-5678", "servico_id": 1, "data": "2026-11-20", "hora": "10:00" }
 ```
 
-## 🌍 Desenvolvimento e hospedagem
+## 🌍 Publicando na Render
 
-O projeto será desenvolvido de forma colaborativa, utilizando Git e GitHub para versionamento e integração dos códigos.
+1. Faça push do projeto para o GitHub.
+2. Na Render: **New + → Blueprint** → escolha este repositório. O `render.yaml` cria o PostgreSQL e o serviço web.
+3. Informe a `ADMIN_SENHA` quando a Render pedir e ajuste nome, endereço, telefone e WhatsApp da barbearia nas variáveis de ambiente.
 
-### Fluxo de desenvolvimento
+### 🔐 Cuidados
+- O `.env` está no `.gitignore` — nunca envie senhas para o GitHub.
+- Em produção, `SECRET_KEY` é gerada pela Render e o banco é PostgreSQL.
 
-1. **Desenvolvimento local:** cada integrante trabalha em sua respectiva parte.
-2. **Versionamento:** envio e integração das alterações pelo GitHub.
-3. **Deploy:** configuração e publicação da aplicação na Render.
-4. **Produção:** aplicação Flask executando no servidor e PostgreSQL armazenando os dados.
+## ✏️ Personalizando para o barbeiro
 
-### 🔐 Configurações importantes
-
-- Utilizar `.gitignore` para arquivos que não devem ser versionados.
-- Não enviar arquivos `.env` ao GitHub.
-- Armazenar credenciais em variáveis de ambiente.
-- Utilizar PostgreSQL em produção.
-- Configurar o Gunicorn para executar a aplicação.
+- **Nome, endereço, telefone, WhatsApp, Instagram:** variáveis `BARBEARIA_*` no `.env`.
+- **Serviços, preços e horários:** pelo próprio painel `/admin` (ou em `popular_dados_iniciais`, em `app/__init__.py`).
+- **Texto "Nossa história":** `app/templates/sobre.html`.
+- **Cores:** variáveis no topo de `app/static/css/style.css`.
 
 ## 👥 Colaboração
 
-Todos os integrantes poderão contribuir com o desenvolvimento por meio do repositório GitHub, respeitando a estrutura de pastas e a organização do projeto.
+Sugestão de fluxo: cada integrante cria uma branch (`git checkout -b minha-parte`), faz suas alterações, envia (`git push -u origin minha-parte`) e abre um Pull Request no GitHub.
 
 ---
 

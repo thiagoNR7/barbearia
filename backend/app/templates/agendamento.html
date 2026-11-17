@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block titulo %}Agendar horário · {{ barbearia.nome }}{% endblock %}
+
+{% block conteudo %}
+<section class="cabecalho-pagina">
+  <div class="container">
+    <span class="sobretitulo">Agendamento</span>
+    <h1>Agende seu horário</h1>
+    <p>Escolha o serviço, o dia e um dos horários livres. Leva menos de um minuto.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    {% if not servicos %}
+      <p class="vazio">Nenhum serviço disponível para agendamento no momento.</p>
+    {% else %}
+    {% include "partials/form_agendamento.html" %}
+    {% endif %}
+  </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/agendamento.js') }}"></script>
+{% endblock %}

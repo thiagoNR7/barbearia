@@ -1,0 +1,95 @@
+{#
+  Formulário de agendamento usado pelo site e pelo painel do barbeiro.
+  Variáveis: servicos, form, hoje, e opcionalmente modo_barbeiro (bool).
+  Com JavaScript: os horários livres aparecem como botões e o envio é feito via /api/agendamentos.
+  Sem JavaScript: o campo de hora vira um input comum e o formulário é enviado normalmente.
+#}
+{% set modo_barbeiro = modo_barbeiro|default(false) %}
+<form class="agendar" id="form-agendamento" method="post" novalidate
+      action="{{ url_for('admin.novo_agendamento') if modo_barbeiro else url_for('main.agendamento') }}"
+      data-api-horarios="{{ url_for('api.api_horarios') }}"
+      data-api-agendar="{{ url_for('api.api_criar_agendamento') }}"
+      data-modo-barbeiro="{{ 'sim' if modo_barbeiro else '' }}">
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+  <div>
+    <div class="etapa">
+      <div class="etapa__titulo"><span>1</span><h3>Serviço</h3></div>
+      <div class="opcoes-servico">
+        {% for s in servicos %}
+          <div class="opcao-servico">
+            <input type="radio" name="servico_id" id="servico-{{ s.id }}" value="{{ s.id }}"
+                   data-nome="{{ s.nome }}" data-preco="{{ s.preco|moeda }}" data-duracao="{{ s.duracao_minutos }}"
+                   {{ 'checked' if form.get('servico_id')|string == s.id|string }} required>
+            <label for="servico-{{ s.id }}">
+              <strong>{{ s.nome }}</strong>
+              <span class="preco">{{ s.preco|moeda }}</span>
+              <small> · {{ s.duracao_minutos }} min</small>
+            </label>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa__titulo"><span>2</span><h3>Dia e horário</h3></div>
+      <div class="form__linha">
+        <div class="campo">
+          <label for="campo-data">Data</label>
+          <input type="date" id="campo-data" name="data" required
+                 min="{{ hoje.isoformat() }}" value="{{ form.get('data', '') }}">
+        </div>
+        <div class="campo sem-js">
+          <label for="campo-hora">Horário</label>
+          <input type="time" id="campo-hora" name="hora" step="1800" value="{{ form.get('hora', '') }}">
+        </div>
+      </div>
+      <div id="horarios" class="horarios" aria-live="polite" style="margin-top:1rem"></div>
+      <p id="horarios-aviso" class="horarios__aviso">Escolha um serviço e uma data para ver os horários livres.</p>
+    </div>
+
+    <div class="etapa">
+      <div class="etapa__titulo"><span>3</span><h3>{{ 'Dados do cliente' if modo_barbeiro else 'Seus dados' }}</h3></div>
+      <div class="form">
+        <div class="form__linha">
+          <div class="campo">
+            <label for="campo-nome">Nome</label>
+            <input type="text" id="campo-nome" name="nome" maxlength="120" autocomplete="name" required
+                   value="{{ form.get('nome', '') }}">
+          </div>
+          <div class="campo">
+            <label for="campo-telefone">WhatsApp / telefone</label>
+            <input type="tel" id="campo-telefone" name="telefone" inputmode="tel" autocomplete="tel"
+                   placeholder="(11) 91234-5678" data-mascara="telefone" required
+                   value="{{ form.get('telefone', '') }}">
+          </div>
+        </div>
+        <div class="campo">
+          <label for="campo-email">E-mail <span class="dica">(opcional)</span></label>
+          <input type="email" id="campo-email" name="email" maxlength="120" autocomplete="email"
+                 value="{{ form.get('email', '') }}">
+        </div>
+        <div class="campo">
+          <label for="campo-obs">Observação <span class="dica">(opcional — ex.: “degradê bem baixo”)</span></label>
+          <textarea id="campo-obs" name="observacao" maxlength="255" rows="2">{{ form.get('observacao', '') }}</textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <aside class="card resumo" aria-label="Resumo do agendamento">
+    <h3>Resumo</h3>
+    <dl>
+      <dt>Serviço</dt><dd id="resumo-servico">—</dd>
+      <dt>Duração</dt><dd id="resumo-duracao">—</dd>
+      <dt>Data</dt><dd id="resumo-data">—</dd>
+      <dt>Horário</dt><dd id="resumo-hora">—</dd>
+      <dt>Total</dt><dd id="resumo-preco" class="resumo__total">—</dd>
+    </dl>
+    <p id="form-erro" class="mensagem mensagem--erro" role="alert" hidden></p>
+    <button type="submit" class="btn btn--bloco" id="botao-confirmar">Confirmar agendamento</button>
+    <p class="texto-pequeno" style="margin-top:1rem">
+      {% if modo_barbeiro %}Horários em cima da hora também aparecem aqui.{% else %}Pagamento na barbearia. Você poderá cancelar pelo link de confirmação até 2 horas antes.{% endif %}
+    </p>
+  </aside>
+</form>

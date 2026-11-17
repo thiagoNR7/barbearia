@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block titulo %}Serviços e preços · {{ barbearia.nome }}{% endblock %}
+
+{% block conteudo %}
+<section class="cabecalho-pagina">
+  <div class="container">
+    <span class="sobretitulo">Serviços</span>
+    <h1>Serviços e preços</h1>
+    <p>Todos os valores e o tempo médio de cada atendimento. Clique em “Agendar” para escolher seu horário.</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    {% if servicos %}
+      <div class="grade grade--3">
+        {% for s in servicos %}
+          <article class="card servico">
+            <h3>{{ s.nome }}</h3>
+            <p>{{ s.descricao }}</p>
+            <div class="servico__rodape">
+              <div>
+                <div class="preco">{{ s.preco|moeda }}</div>
+                <div class="duracao">⏱ {{ s.duracao_minutos }} min</div>
+              </div>
+              <a class="btn btn--pequeno" href="{{ url_for('main.agendamento', servico=s.id) }}">Agendar</a>
+            </div>
+          </article>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p class="vazio">Nenhum serviço cadastrado no momento.</p>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

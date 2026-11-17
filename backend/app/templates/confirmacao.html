@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% block titulo %}Seu agendamento · {{ barbearia.nome }}{% endblock %}
+
+{% block conteudo %}
+<section class="secao">
+  <div class="container">
+    <div class="card confirmacao">
+      {% if ag.status == 'cancelado' %}
+        <div class="confirmacao__icone confirmacao__icone--cancelado">✕</div>
+        <h1 style="font-size:2rem">Agendamento cancelado</h1>
+        <p class="texto-suave">Esse horário foi liberado. Quando quiser, é só marcar de novo.</p>
+      {% else %}
+        <div class="confirmacao__icone">✓</div>
+        <h1 style="font-size:2rem">{{ 'Atendimento concluído' if ag.status == 'concluido' else 'Horário confirmado!' }}</h1>
+        <p class="texto-suave">
+          {% if ag.status == 'confirmado' %}Guarde este link: por ele você confere os detalhes ou cancela, se precisar.{% else %}Status: {{ ag.status_label }}.{% endif %}
+        </p>
+      {% endif %}
+
+      <dl>
+        <dt>Cliente</dt><dd>{{ ag.cliente.nome }}</dd>
+        <dt>Serviço</dt><dd>{{ ag.servico.nome }}</dd>
+        <dt>Data</dt><dd>{{ ag.inicio|dia_semana }}, {{ ag.inicio|data_br }}</dd>
+        <dt>Horário</dt><dd>{{ ag.inicio|hora }} às {{ ag.fim|hora }}</dd>
+        <dt>Valor</dt><dd>{{ ag.preco|moeda }}</dd>
+        <dt>Endereço</dt><dd>{{ barbearia.endereco }}</dd>
+        {% if ag.observacao %}<dt>Observação</dt><dd>{{ ag.observacao }}</dd>{% endif %}
+      </dl>
+
+      <div class="confirmacao__acoes">
+        {% if ag.status == 'confirmado' %}
+          {% set texto_whats = 'Olá! Agendei ' ~ ag.servico.nome ~ ' para ' ~ (ag.inicio|data_br) ~ ' às ' ~ (ag.inicio|hora) ~ ' (' ~ ag.cliente.nome ~ ').' %}
+          <a class="btn" href="https://wa.me/{{ barbearia.whatsapp }}?text={{ texto_whats|urlencode }}" target="_blank" rel="noopener">Avisar no WhatsApp</a>
+        {% else %}
+          <a class="btn" href="{{ url_for('main.agendamento') }}">Agendar novamente</a>
+        {% endif %}
+        {% if pode_cancelar %}
+          <form method="post" action="{{ url_for('main.cancelar_agendamento', codigo=ag.codigo) }}"
+                data-confirmar="Tem certeza que deseja cancelar este horário?">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            <button class="btn btn--contorno" type="submit">Cancelar horário</button>
+          </form>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

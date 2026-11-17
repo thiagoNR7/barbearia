@@ -1,0 +1,37 @@
+{% extends "admin/base.html" %}
+{% from "partials/estrelas.html" import estrelas %}
+
+{% block admin %}
+<div class="admin__topo"><h1>Avaliações</h1></div>
+
+<div class="tabela-wrap">
+  <table class="tabela">
+    <thead><tr><th>Data</th><th>Cliente</th><th>Nota</th><th>Comentário</th><th>No site?</th><th>Ações</th></tr></thead>
+    <tbody>
+      {% for a in avaliacoes %}
+        <tr class="{{ 'inativo' if not a.visivel }}">
+          <td>{{ a.criado_em|data_br }}</td>
+          <td>{{ a.nome }}</td>
+          <td>{{ estrelas(a.nota) }}</td>
+          <td style="max-width:420px">{{ a.comentario }}</td>
+          <td>{{ 'Sim' if a.visivel else 'Oculta' }}</td>
+          <td>
+            <div class="acoes-linha">
+              <form method="post" action="{{ url_for('admin.alternar_avaliacao', av_id=a.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn--pequeno btn--contorno" type="submit">{{ 'Ocultar' if a.visivel else 'Publicar' }}</button>
+              </form>
+              <form method="post" action="{{ url_for('admin.excluir_avaliacao', av_id=a.id) }}" data-confirmar="Excluir esta avaliação definitivamente?">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn--pequeno btn--perigo" type="submit">Excluir</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" class="vazio">Nenhuma avaliação recebida ainda.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

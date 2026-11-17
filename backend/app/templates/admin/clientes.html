@@ -1,0 +1,30 @@
+{% extends "admin/base.html" %}
+
+{% block admin %}
+<div class="admin__topo">
+  <h1>Clientes</h1>
+  <form method="get" class="navegador-dia">
+    <input type="search" name="q" value="{{ busca }}" placeholder="Buscar por nome ou telefone" aria-label="Buscar cliente" style="width:260px">
+    <button class="btn btn--pequeno" type="submit">Buscar</button>
+  </form>
+</div>
+
+<div class="tabela-wrap">
+  <table class="tabela">
+    <thead><tr><th>Nome</th><th>Telefone</th><th>E-mail</th><th class="num">Atendimentos</th><th>Último agendamento</th></tr></thead>
+    <tbody>
+      {% for cliente, visitas, ultimo in linhas %}
+        <tr>
+          <td>{{ cliente.nome }}</td>
+          <td><a href="https://wa.me/55{{ cliente.telefone }}" target="_blank" rel="noopener">{{ cliente.telefone_formatado }}</a></td>
+          <td>{{ cliente.email or '—' }}</td>
+          <td class="num">{{ visitas }}</td>
+          <td>{% if ultimo %}<a href="{{ url_for('admin.painel', data=ultimo.date().isoformat()) }}">{{ ultimo|data_br }}</a>{% else %}—{% endif %}</td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="vazio">{{ 'Nenhum cliente encontrado.' if busca else 'Os clientes aparecem aqui conforme forem agendando.' }}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

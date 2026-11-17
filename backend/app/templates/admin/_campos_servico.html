@@ -1,0 +1,25 @@
+{% set sufixo = s.id if s else 'novo' %}
+<div class="form__linha">
+  <div class="campo">
+    <label for="nome-{{ sufixo }}">Nome</label>
+    <input type="text" id="nome-{{ sufixo }}" name="nome" maxlength="80" required value="{{ s.nome if s else '' }}">
+  </div>
+  <div class="campo">
+    <label for="preco-{{ sufixo }}">Preço (R$)</label>
+    <input type="text" id="preco-{{ sufixo }}" name="preco" inputmode="decimal" required placeholder="40,00"
+           value="{{ ('%.2f'|format(s.preco)).replace('.', ',') if s else '' }}">
+  </div>
+  <div class="campo">
+    <label for="duracao-{{ sufixo }}">Duração (min)</label>
+    <input type="number" id="duracao-{{ sufixo }}" name="duracao_minutos" min="5" max="480" step="5" required
+           value="{{ s.duracao_minutos if s else 30 }}">
+  </div>
+  <div class="campo">
+    <label for="ordem-{{ sufixo }}">Ordem no site</label>
+    <input type="number" id="ordem-{{ sufixo }}" name="ordem" value="{{ s.ordem if s else 0 }}">
+  </div>
+</div>
+<div class="campo">
+  <label for="descricao-{{ sufixo }}">Descrição</label>
+  <input type="text" id="descricao-{{ sufixo }}" name="descricao" maxlength="255" value="{{ s.descricao if s else '' }}">
+</div>

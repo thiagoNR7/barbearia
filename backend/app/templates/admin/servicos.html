@@ -1,0 +1,53 @@
+{% extends "admin/base.html" %}
+
+{% block admin %}
+<div class="admin__topo"><h1>Serviços</h1></div>
+
+<div class="tabela-wrap" style="margin-bottom:2rem">
+  <table class="tabela">
+    <thead>
+      <tr><th>Ordem</th><th>Serviço</th><th class="num">Preço</th><th class="num">Duração</th><th>Situação</th><th>Ações</th></tr>
+    </thead>
+    <tbody>
+      {% for s in servicos %}
+        <tr class="{{ 'inativo' if not s.ativo }}">
+          <td>{{ s.ordem }}</td>
+          <td><strong>{{ s.nome }}</strong><br><small class="texto-pequeno">{{ s.descricao }}</small></td>
+          <td class="num">{{ s.preco|moeda }}</td>
+          <td class="num">{{ s.duracao_minutos }} min</td>
+          <td>{{ 'Ativo' if s.ativo else 'Oculto' }}</td>
+          <td>
+            <div class="acoes-linha">
+              <form method="post" action="{{ url_for('admin.alternar_servico', servico_id=s.id) }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <button class="btn btn--pequeno btn--contorno" type="submit">{{ 'Ocultar' if s.ativo else 'Ativar' }}</button>
+              </form>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="6" style="padding-top:0">
+            <details class="editar">
+              <summary class="texto-pequeno">✎ Editar “{{ s.nome }}”</summary>
+              <form class="form" method="post" action="{{ url_for('admin.editar_servico', servico_id=s.id) }}" style="margin-top:1rem">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                {% with s=s %}{% include "admin/_campos_servico.html" %}{% endwith %}
+                <div><button class="btn btn--pequeno" type="submit">Salvar alterações</button></div>
+              </form>
+            </details>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" class="vazio">Nenhum serviço cadastrado.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<form class="card form" method="post" action="{{ url_for('admin.servicos') }}">
+  <h3>Novo serviço</h3>
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+  {% with s=None %}{% include "admin/_campos_servico.html" %}{% endwith %}
+  <div><button class="btn" type="submit">Adicionar serviço</button></div>
+</form>
+{% endblock %}

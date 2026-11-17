@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% from "partials/estrelas.html" import estrelas %}
+
+{% block conteudo %}
+<section class="hero">
+  <div class="container">
+    <span class="sobretitulo">Barbearia · desde sempre no bairro</span>
+    <h1>Seu estilo, <span>na hora marcada</span></h1>
+    <p>Corte, barba e acabamento feitos com calma e capricho. Escolha o serviço, veja os horários livres e garanta sua vaga em menos de um minuto.</p>
+    <div class="hero__acoes">
+      <a class="btn" href="{{ url_for('main.agendamento') }}">Agendar agora</a>
+      <a class="btn btn--contorno" href="{{ url_for('main.servicos') }}">Ver serviços</a>
+    </div>
+    {% if media %}
+      <p class="hero__nota">{{ estrelas(media) }} &nbsp;{{ "%.1f"|format(media) }} de média em {{ total_avaliacoes }} avaliaç{{ 'ão' if total_avaliacoes == 1 else 'ões' }}</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    <div class="secao__topo">
+      <span class="sobretitulo">Serviços</span>
+      <h2>Os mais pedidos</h2>
+      <p>Preços justos e tempo certo para cada serviço — sem correria.</p>
+    </div>
+    <div class="grade grade--4">
+      {% for s in servicos %}
+        <article class="card servico">
+          <h3>{{ s.nome }}</h3>
+          <p>{{ s.descricao }}</p>
+          <div class="servico__rodape">
+            <div>
+              <div class="preco">{{ s.preco|moeda }}</div>
+              <div class="duracao">{{ s.duracao_minutos }} min</div>
+            </div>
+            <a class="btn btn--pequeno btn--contorno" href="{{ url_for('main.agendamento', servico=s.id) }}">Agendar</a>
+          </div>
+        </article>
+      {% endfor %}
+    </div>
+    <p class="centro" style="margin-top:2rem"><a href="{{ url_for('main.servicos') }}">Ver todos os serviços →</a></p>
+  </div>
+</section>
+
+<section class="secao secao--alt">
+  <div class="container">
+    <div class="secao__topo">
+      <span class="sobretitulo">Como funciona</span>
+      <h2>Agendar é simples</h2>
+    </div>
+    <div class="grade grade--3">
+      <div class="passo">
+        <div class="passo__numero">1</div>
+        <h3>Escolha o serviço</h3>
+        <p>Corte, barba, combo… o tempo de cada um já é considerado na agenda.</p>
+      </div>
+      <div class="passo">
+        <div class="passo__numero">2</div>
+        <h3>Escolha dia e horário</h3>
+        <p>Só aparecem os horários realmente livres. Nada de marcar e chegar com fila.</p>
+      </div>
+      <div class="passo">
+        <div class="passo__numero">3</div>
+        <h3>Pronto!</h3>
+        <p>Você recebe um link com os detalhes e pode cancelar sozinho se precisar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% if avaliacoes %}
+<section class="secao">
+  <div class="container">
+    <div class="secao__topo">
+      <span class="sobretitulo">Avaliações</span>
+      <h2>Quem corta, recomenda</h2>
+    </div>
+    <div class="grade grade--3">
+      {% for a in avaliacoes %}
+        <article class="card avaliacao">
+          {{ estrelas(a.nota) }}
+          <blockquote>“{{ a.comentario }}”</blockquote>
+          <footer><strong>{{ a.nome }}</strong> · {{ a.criado_em|data_br }}</footer>
+        </article>
+      {% endfor %}
+    </div>
+    <p class="centro" style="margin-top:2rem"><a href="{{ url_for('main.avaliacoes') }}">Ver todas e deixar a sua →</a></p>
+  </div>
+</section>
+{% endif %}
+
+<section class="secao secao--alt">
+  <div class="container centro">
+    <h2>Bora dar um tapa no visual?</h2>
+    <p class="texto-suave">{{ barbearia.endereco }}</p>
+    <a class="btn" href="{{ url_for('main.agendamento') }}">Agendar meu horário</a>
+  </div>
+</section>
+{% endblock %}
