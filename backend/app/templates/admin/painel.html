@@ -26,23 +26,23 @@
 {% endif %}
 
 <div class="tabela-wrap">
-  <table class="tabela">
+  <table class="tabela tabela--cartoes">
     <thead>
       <tr><th>Horário</th><th>Cliente</th><th>Serviço</th><th class="num">Valor</th><th>Status</th><th>Ações</th></tr>
     </thead>
     <tbody>
       {% for ag in agendamentos %}
         <tr class="{{ 'inativo' if ag.status == 'cancelado' }}">
-          <td><strong>{{ ag.inicio|hora }}</strong><br><small class="texto-pequeno">até {{ ag.fim|hora }}</small></td>
-          <td>
+          <td data-label="Horário"><strong>{{ ag.inicio|hora }}</strong><br><small class="texto-pequeno">até {{ ag.fim|hora }}</small></td>
+          <td data-label="Cliente">
             {{ ag.cliente.nome }}<br>
             <a class="texto-pequeno" href="https://wa.me/55{{ ag.cliente.telefone }}" target="_blank" rel="noopener">{{ ag.cliente.telefone_formatado }}</a>
             {% if ag.observacao %}<br><small class="texto-pequeno">“{{ ag.observacao }}”</small>{% endif %}
           </td>
-          <td>{{ ag.servico.nome }}</td>
-          <td class="num">{{ ag.preco|moeda }}</td>
-          <td><span class="etiqueta etiqueta--{{ ag.status }}">{{ ag.status_label }}</span></td>
-          <td>
+          <td data-label="Serviço">{{ ag.servico.nome }}</td>
+          <td class="num" data-label="Valor">{{ ag.preco|moeda }}</td>
+          <td data-label="Status"><span class="etiqueta etiqueta--{{ ag.status }}">{{ ag.status_label }}</span></td>
+          <td class="celula-acoes" data-label="Ações">
             <div class="acoes-linha">
               {% for chave, rotulo in [('concluido', 'Concluir'), ('faltou', 'Faltou'), ('cancelado', 'Cancelar'), ('confirmado', 'Reabrir')] %}
                 {% if ag.status != chave and not (chave == 'confirmado' and ag.status == 'concluido') %}

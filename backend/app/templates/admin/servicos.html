@@ -4,19 +4,19 @@
 <div class="admin__topo"><h1>Serviços</h1></div>
 
 <div class="tabela-wrap" style="margin-bottom:2rem">
-  <table class="tabela">
+  <table class="tabela tabela--cartoes">
     <thead>
       <tr><th>Ordem</th><th>Serviço</th><th class="num">Preço</th><th class="num">Duração</th><th>Situação</th><th>Ações</th></tr>
     </thead>
     <tbody>
       {% for s in servicos %}
         <tr class="{{ 'inativo' if not s.ativo }}">
-          <td>{{ s.ordem }}</td>
-          <td><strong>{{ s.nome }}</strong><br><small class="texto-pequeno">{{ s.descricao }}</small></td>
-          <td class="num">{{ s.preco|moeda }}</td>
-          <td class="num">{{ s.duracao_minutos }} min</td>
-          <td>{{ 'Ativo' if s.ativo else 'Oculto' }}</td>
-          <td>
+          <td data-label="Ordem">{{ s.ordem }}</td>
+          <td data-label="Serviço"><strong>{{ s.nome }}</strong><br><small class="texto-pequeno">{{ s.descricao }}</small></td>
+          <td class="num" data-label="Preço">{{ s.preco|moeda }}</td>
+          <td class="num" data-label="Duração">{{ s.duracao_minutos }} min</td>
+          <td data-label="Situação">{{ 'Ativo' if s.ativo else 'Oculto' }}</td>
+          <td class="celula-acoes" data-label="Ações">
             <div class="acoes-linha">
               <form method="post" action="{{ url_for('admin.alternar_servico', servico_id=s.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
@@ -25,7 +25,7 @@
             </div>
           </td>
         </tr>
-        <tr>
+        <tr class="linha-editar">
           <td colspan="6" style="padding-top:0">
             <details class="editar">
               <summary class="texto-pequeno">✎ Editar “{{ s.nome }}”</summary>

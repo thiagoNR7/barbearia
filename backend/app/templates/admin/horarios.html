@@ -6,7 +6,7 @@
 <form method="post" action="{{ url_for('admin.horarios') }}" style="margin-bottom:2.5rem">
   <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
   <div class="tabela-wrap">
-    <table class="tabela">
+    <table class="tabela tabela--cartoes tabela--dias">
       <thead>
         <tr><th>Dia</th><th>Abre?</th><th>Abertura</th><th>Fechamento</th><th>Pausa (início)</th><th>Pausa (fim)</th></tr>
       </thead>
@@ -14,12 +14,12 @@
         {% for h in expedientes %}
           {% set p = 'd' ~ h.dia_semana ~ '_' %}
           <tr>
-            <td><strong>{{ h.nome_dia }}</strong></td>
-            <td><input type="checkbox" name="{{ p }}aberto" {{ 'checked' if h.aberto }} aria-label="{{ h.nome_dia }} aberto"></td>
-            <td><input type="time" name="{{ p }}abertura" value="{{ h.abertura.strftime('%H:%M') }}"></td>
-            <td><input type="time" name="{{ p }}fechamento" value="{{ h.fechamento.strftime('%H:%M') }}"></td>
-            <td><input type="time" name="{{ p }}pausa_inicio" value="{{ h.pausa_inicio.strftime('%H:%M') if h.pausa_inicio else '' }}"></td>
-            <td><input type="time" name="{{ p }}pausa_fim" value="{{ h.pausa_fim.strftime('%H:%M') if h.pausa_fim else '' }}"></td>
+            <td class="celula-titulo"><strong>{{ h.nome_dia }}</strong></td>
+            <td data-label="Abre?"><input type="checkbox" name="{{ p }}aberto" {{ 'checked' if h.aberto }} aria-label="{{ h.nome_dia }} aberto"></td>
+            <td data-label="Abertura"><input type="time" name="{{ p }}abertura" value="{{ h.abertura.strftime('%H:%M') }}"></td>
+            <td data-label="Fechamento"><input type="time" name="{{ p }}fechamento" value="{{ h.fechamento.strftime('%H:%M') }}"></td>
+            <td data-label="Pausa (início)"><input type="time" name="{{ p }}pausa_inicio" value="{{ h.pausa_inicio.strftime('%H:%M') if h.pausa_inicio else '' }}"></td>
+            <td data-label="Pausa (fim)"><input type="time" name="{{ p }}pausa_fim" value="{{ h.pausa_fim.strftime('%H:%M') if h.pausa_fim else '' }}"></td>
           </tr>
         {% endfor %}
       </tbody>

@@ -5,17 +5,17 @@
 <div class="admin__topo"><h1>Avaliações</h1></div>
 
 <div class="tabela-wrap">
-  <table class="tabela">
+  <table class="tabela tabela--cartoes">
     <thead><tr><th>Data</th><th>Cliente</th><th>Nota</th><th>Comentário</th><th>No site?</th><th>Ações</th></tr></thead>
     <tbody>
       {% for a in avaliacoes %}
         <tr class="{{ 'inativo' if not a.visivel }}">
-          <td>{{ a.criado_em|data_br }}</td>
-          <td>{{ a.nome }}</td>
-          <td>{{ estrelas(a.nota) }}</td>
-          <td style="max-width:420px">{{ a.comentario }}</td>
-          <td>{{ 'Sim' if a.visivel else 'Oculta' }}</td>
-          <td>
+          <td data-label="Data">{{ a.criado_em|data_br }}</td>
+          <td data-label="Cliente">{{ a.nome }}</td>
+          <td data-label="Nota">{{ estrelas(a.nota) }}</td>
+          <td data-label="Comentário" style="max-width:420px">{{ a.comentario }}</td>
+          <td data-label="No site?">{{ 'Sim' if a.visivel else 'Oculta' }}</td>
+          <td class="celula-acoes" data-label="Ações">
             <div class="acoes-linha">
               <form method="post" action="{{ url_for('admin.alternar_avaliacao', av_id=a.id) }}">
                 <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">

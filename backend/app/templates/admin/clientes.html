@@ -10,16 +10,16 @@
 </div>
 
 <div class="tabela-wrap">
-  <table class="tabela">
+  <table class="tabela tabela--cartoes">
     <thead><tr><th>Nome</th><th>Telefone</th><th>E-mail</th><th class="num">Atendimentos</th><th>Último agendamento</th></tr></thead>
     <tbody>
       {% for cliente, visitas, ultimo in linhas %}
         <tr>
-          <td>{{ cliente.nome }}</td>
-          <td><a href="https://wa.me/55{{ cliente.telefone }}" target="_blank" rel="noopener">{{ cliente.telefone_formatado }}</a></td>
-          <td>{{ cliente.email or '—' }}</td>
-          <td class="num">{{ visitas }}</td>
-          <td>{% if ultimo %}<a href="{{ url_for('admin.painel', data=ultimo.date().isoformat()) }}">{{ ultimo|data_br }}</a>{% else %}—{% endif %}</td>
+          <td data-label="Nome">{{ cliente.nome }}</td>
+          <td data-label="Telefone"><a href="https://wa.me/55{{ cliente.telefone }}" target="_blank" rel="noopener">{{ cliente.telefone_formatado }}</a></td>
+          <td data-label="E-mail">{{ cliente.email or '—' }}</td>
+          <td class="num" data-label="Atendimentos">{{ visitas }}</td>
+          <td data-label="Último agendamento">{% if ultimo %}<a href="{{ url_for('admin.painel', data=ultimo.date().isoformat()) }}">{{ ultimo|data_br }}</a>{% else %}—{% endif %}</td>
         </tr>
       {% else %}
         <tr><td colspan="5" class="vazio">{{ 'Nenhum cliente encontrado.' if busca else 'Os clientes aparecem aqui conforme forem agendando.' }}</td></tr>
