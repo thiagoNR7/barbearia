@@ -10,6 +10,10 @@
 
 Projeto acadêmico de desenvolvimento de um site para uma barbearia de bairro, com apresentação de serviços, avaliações de clientes, agendamento online e um **painel para o barbeiro** gerenciar a agenda.
 
+## 🎥 Demonstração
+
+[Assista ao vídeo de demonstração do sistema](https://youtu.be/I4esbNbmNMc)
+
 ## ✨ Funcionalidades
 
 **Para o cliente**
@@ -53,8 +57,8 @@ Pré-requisitos: [Python 3.10+](https://www.python.org/downloads/) e [Git](https
 
 ```bash
 # 1. Baixar o projeto
-git clone https://github.com/Jerrypro07/Barbearia_projeto.git
-cd Barbearia_projeto/backend
+git clone https://github.com/thiagoNR7/barbearia.git
+cd barbearia/backend
 
 # 2. Criar e ativar um ambiente virtual
 python -m venv venv
