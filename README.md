@@ -14,6 +14,14 @@ Projeto acadêmico de desenvolvimento de um site para uma barbearia de bairro, c
 
 [Assista ao vídeo de demonstração do sistema](https://youtu.be/I4esbNbmNMc)
 
+## 🌐 Sistema online
+
+**Acesse:** https://barbearia-2pso.onrender.com
+
+Painel do barbeiro: https://barbearia-2pso.onrender.com/admin
+
+(O servidor gratuito "dorme" após 15 minutos sem acesso; o primeiro carregamento pode levar até 1 minuto.)
+
 ## ✨ Funcionalidades
 
 **Para o cliente**
