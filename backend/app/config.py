@@ -10,9 +10,12 @@ def _database_url():
         instance = BASE_DIR / "instance"
         instance.mkdir(exist_ok=True)
         return f"sqlite:///{instance / 'barbearia.db'}"
-    # A Render (e o Heroku) entregam "postgres://", mas o SQLAlchemy exige "postgresql://"
-    if url.startswith("postgres://"):
-        url = url.replace("postgres://", "postgresql://", 1)
+    # A Render entrega "postgres://" ou "postgresql://". Indicamos o driver explicitamente
+    # (psycopg2, que está no requirements.txt), porque versões novas do SQLAlchemy
+    # usam o psycopg 3 como padrão e o deploy falharia.
+    for prefixo in ("postgres://", "postgresql://"):
+        if url.startswith(prefixo):
+            url = "postgresql+psycopg2://" + url[len(prefixo):]
     return url
 
 
