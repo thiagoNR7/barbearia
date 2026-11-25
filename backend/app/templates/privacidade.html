@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block titulo %}Política de privacidade · {{ barbearia.nome }}{% endblock %}
+
+{#
+  MODELO: revise com o barbeiro antes de publicar (nome do responsável, contato e prazos).
+  Este texto não substitui orientação jurídica.
+#}
+
+{% block conteudo %}
+<section class="cabecalho-pagina">
+  <div class="container">
+    <span class="sobretitulo">LGPD</span>
+    <h1>Política de privacidade</h1>
+    <p>Como a {{ barbearia.nome }} usa os seus dados, conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).</p>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container texto-legal">
+    <h2>Quem cuida dos seus dados</h2>
+    <p>A {{ barbearia.nome }}, localizada em {{ barbearia.endereco }}, é a responsável pelos dados coletados neste site. Para qualquer dúvida ou pedido sobre os seus dados, fale conosco pelo telefone <a href="tel:+55{{ barbearia.telefone|replace('(', '')|replace(')', '')|replace(' ', '')|replace('-', '') }}">{{ barbearia.telefone }}</a> ou pelo <a href="https://wa.me/{{ barbearia.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a>.</p>
+
+    <h2>Quais dados coletamos e para quê</h2>
+    <div class="tabela-wrap">
+      <table class="tabela">
+        <thead><tr><th>Dado</th><th>Quando</th><th>Para que usamos</th></tr></thead>
+        <tbody>
+          <tr><td>Nome e telefone</td><td>Ao agendar</td><td>Identificar você, confirmar o horário e avisar sobre mudanças</td></tr>
+          <tr><td>E-mail (opcional)</td><td>Ao agendar</td><td>Contato alternativo, só se você informar</td></tr>
+          <tr><td>Observação (opcional)</td><td>Ao agendar</td><td>Saber como você quer o corte</td></tr>
+          <tr><td>Serviço, data e horário</td><td>Ao agendar</td><td>Organizar a agenda e o histórico de atendimentos</td></tr>
+          <tr><td>Nome, nota e comentário</td><td>Ao avaliar</td><td>Publicar a sua avaliação no site</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Usamos esses dados porque são necessários para prestar o serviço que você pediu, o agendamento (art. 7º, inciso V, da LGPD). Avaliações são publicadas porque você escolheu enviá-las.</p>
+
+    <h2>Com quem compartilhamos</h2>
+    <p>Não vendemos nem compartilhamos seus dados com outras empresas para fins de propaganda. Os dados ficam guardados no serviço de hospedagem do site, que só os armazena para que o sistema funcione.</p>
+
+    <h2>Por quanto tempo guardamos</h2>
+    <p>Mantemos o histórico de agendamentos enquanto você for cliente, para facilitar novos agendamentos. Você pode pedir a exclusão a qualquer momento.</p>
+
+    <h2>Seus direitos</h2>
+    <p>Pela LGPD (art. 18), você pode pedir para:</p>
+    <ul>
+      <li>saber quais dados seus nós temos;</li>
+      <li>corrigir dados incompletos ou errados;</li>
+      <li>excluir os seus dados;</li>
+      <li>retirar o consentimento dado para cookies opcionais.</li>
+    </ul>
+    <p>É só falar conosco pelos contatos acima.</p>
+
+    <h2 id="cookies">Cookies</h2>
+    <div class="tabela-wrap">
+      <table class="tabela">
+        <thead><tr><th>Cookie</th><th>Tipo</th><th>Para que serve</th><th>Duração</th></tr></thead>
+        <tbody>
+          <tr><td><code>session</code></td><td>Essencial</td><td>Protege os formulários contra envios falsos e mantém o login do painel do barbeiro</td><td>Até fechar o navegador</td></tr>
+          <tr><td><code>consentimento_cookies</code></td><td>Essencial</td><td>Lembra a sua escolha sobre cookies</td><td>1 ano</td></tr>
+          <tr><td>Cookies do Google Maps</td><td>Terceiros (opcional)</td><td>Exibir o mapa na página “Sobre”. Só são usados se você aceitar ou clicar em “Mostrar mapa”</td><td>Definida pelo Google</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Não usamos cookies de propaganda nem de rastreamento.</p>
+    <p><button type="button" class="btn btn--contorno btn--pequeno" data-abrir-cookies>Mudar minhas preferências de cookies</button></p>
+  </div>
+</section>
+{% endblock %}

@@ -89,7 +89,7 @@
     <p id="form-erro" class="mensagem mensagem--erro" role="alert" hidden></p>
     <button type="submit" class="btn btn--bloco" id="botao-confirmar">Confirmar agendamento</button>
     <p class="texto-pequeno" style="margin-top:1rem">
-      {% if modo_barbeiro %}Horários em cima da hora também aparecem aqui.{% else %}Pagamento na barbearia. Você poderá cancelar pelo link de confirmação até 2 horas antes.{% endif %}
+      {% if modo_barbeiro %}Horários em cima da hora também aparecem aqui.{% else %}Pagamento na barbearia. Você poderá cancelar pelo link de confirmação até 2 horas antes. Seus dados são usados só para o agendamento (<a href="{{ url_for('main.privacidade') }}">política de privacidade</a>).{% endif %}
     </p>
   </aside>
 </form>

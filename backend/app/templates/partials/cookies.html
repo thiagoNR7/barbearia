@@ -1,0 +1,18 @@
+{#
+  Aviso de cookies (LGPD). Começa oculto e o main.js mostra se o visitante ainda não escolheu.
+  A escolha fica no cookie "consentimento_cookies" ("todos" ou "essenciais") por 1 ano.
+#}
+<section class="aviso-cookies" id="aviso-cookies" role="dialog" aria-live="polite" aria-labelledby="aviso-cookies-titulo" hidden>
+  <div class="aviso-cookies__texto">
+    <h2 id="aviso-cookies-titulo">Cookies</h2>
+    <p>
+      Usamos apenas cookies essenciais para o agendamento e o login funcionarem.
+      O mapa da página “Sobre” é do Google, que usa cookies próprios: ele só é carregado se você permitir.
+      <a href="{{ url_for('main.privacidade') }}#cookies">Saiba mais</a>.
+    </p>
+  </div>
+  <div class="aviso-cookies__acoes">
+    <button type="button" class="btn btn--contorno btn--pequeno" data-cookies="essenciais">Só essenciais</button>
+    <button type="button" class="btn btn--pequeno" data-cookies="todos">Aceitar todos</button>
+  </div>
+</section>

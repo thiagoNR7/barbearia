@@ -104,6 +104,11 @@ def cancelar_agendamento(codigo):
     return redirect(url_for("main.ver_agendamento", codigo=codigo))
 
 
+@main_bp.route("/privacidade")
+def privacidade():
+    return render_template("privacidade.html")
+
+
 @main_bp.route("/avaliacoes", methods=["GET", "POST"])
 def avaliacoes():
     form = {}

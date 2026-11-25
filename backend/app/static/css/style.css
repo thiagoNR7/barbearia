@@ -834,3 +834,59 @@ details.editar[open] { grid-column: 1 / -1; }
   .tabela--dias input[type="checkbox"] { width: 24px; height: 24px; }
   .tabela--dias td[data-label]::before { top: 50%; transform: translateY(-50%); }
 }
+
+/* 18. Cookies e privacidade (LGPD)
+   -------------------------------------------------------------------------- */
+.aviso-cookies {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 1.25rem;
+  max-width: 880px;
+  margin-inline: auto;
+  padding: 1rem 1.25rem;
+  background: var(--aco-2);
+  border: 1px solid var(--linha-forte);
+  border-left: 3px solid var(--acento);
+  border-radius: var(--raio);
+  box-shadow: var(--sombra);
+}
+.aviso-cookies[hidden] { display: none; }
+.aviso-cookies h2 { font-size: 1.05rem; margin: 0 0 .25rem; }
+.aviso-cookies p { margin: 0; font-size: .9rem; color: var(--texto-2); }
+.aviso-cookies__texto { flex: 1; }
+.aviso-cookies__acoes { display: flex; gap: .5rem; flex-shrink: 0; }
+
+/* Enquanto o aviso está aberto, o botão do WhatsApp não fica por baixo dele */
+.com-aviso-cookies .whatsapp-flutuante { display: none; }
+
+.mapa-bloqueado {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: .75rem;
+  padding: 1.5rem;
+  text-align: center;
+  background:
+    repeating-linear-gradient(45deg, transparent 0 12px, rgba(255, 255, 255, .02) 12px 24px),
+    var(--aco-fundo);
+  border: 1px dashed var(--linha-forte);
+  filter: none;
+}
+.mapa-bloqueado p { margin: 0; color: var(--texto-2); font-size: .9rem; max-width: 280px; }
+
+.texto-legal { max-width: 760px; }
+.texto-legal h2 { font-size: 1.4rem; margin-top: 2.25rem; }
+.texto-legal h2:first-child { margin-top: 0; }
+.texto-legal p, .texto-legal li { color: var(--texto-2); }
+.texto-legal .tabela-wrap { margin-bottom: 1rem; }
+
+@media (max-width: 700px) {
+  .aviso-cookies { flex-direction: column; align-items: stretch; left: .75rem; right: .75rem; bottom: .75rem; }
+  .aviso-cookies__acoes .btn { flex: 1; min-height: 44px; }
+}

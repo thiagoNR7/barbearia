@@ -46,7 +46,7 @@ def agendar(client, hora="10:00", servico=None, telefone="(11) 91234-5678", data
 
 
 def test_paginas_publicas_abrem(client):
-    for url in ["/", "/sobre", "/servicos", "/agendamento", "/avaliacoes", "/api/servicos"]:
+    for url in ["/", "/sobre", "/servicos", "/agendamento", "/avaliacoes", "/privacidade", "/api/servicos"]:
         assert client.get(url).status_code == 200, url
 
 

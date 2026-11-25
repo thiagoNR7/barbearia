@@ -40,5 +40,80 @@
     if (input.value) input.value = mascararTelefone(input.value);
   });
 
+  // ------------------------------------------------------------------------
+  // Cookies (LGPD): aviso na primeira visita e mapa do Google só com permissão
+  // ------------------------------------------------------------------------
+  const NOME_COOKIE = "consentimento_cookies";
+  const aviso = document.getElementById("aviso-cookies");
+
+  function lerConsentimento() {
+    const achado = document.cookie.split("; ").find(function (c) { return c.indexOf(NOME_COOKIE + "=") === 0; });
+    return achado ? achado.split("=")[1] : null;
+  }
+
+  function salvarConsentimento(valor) {
+    const seguro = location.protocol === "https:" ? "; Secure" : "";
+    document.cookie = NOME_COOKIE + "=" + valor + "; Max-Age=31536000; Path=/; SameSite=Lax" + seguro;
+  }
+
+  function carregarMapa(caixa) {
+    if (!caixa || caixa.dataset.carregado) return;
+    const iframe = document.createElement("iframe");
+    iframe.className = "mapa";
+    iframe.loading = "lazy";
+    iframe.referrerPolicy = "no-referrer-when-downgrade";
+    iframe.title = "Mapa com a localização da barbearia";
+    iframe.src = caixa.dataset.mapaSrc;
+    caixa.dataset.carregado = "sim";
+    caixa.replaceWith(iframe);
+  }
+
+  function aplicarConsentimento(valor) {
+    if (valor === "todos") {
+      document.querySelectorAll("[data-mapa-src]").forEach(carregarMapa);
+    }
+  }
+
+  function mostrarAviso() {
+    if (!aviso) return;
+    aviso.hidden = false;
+    document.body.classList.add("com-aviso-cookies");
+  }
+
+  function esconderAviso() {
+    if (!aviso) return;
+    aviso.hidden = true;
+    document.body.classList.remove("com-aviso-cookies");
+  }
+
+  document.querySelectorAll("[data-cookies]").forEach(function (botao) {
+    botao.addEventListener("click", function () {
+      const valor = botao.dataset.cookies;
+      salvarConsentimento(valor);
+      esconderAviso();
+      aplicarConsentimento(valor);
+    });
+  });
+
+  document.querySelectorAll("[data-abrir-cookies]").forEach(function (botao) {
+    botao.addEventListener("click", function () {
+      mostrarAviso();
+      const primeiro = aviso && aviso.querySelector("button");
+      if (primeiro) primeiro.focus();
+    });
+  });
+
+  // "Mostrar mapa": a pessoa pediu o mapa, então ele carrega só desta vez
+  document.querySelectorAll("[data-carregar-mapa]").forEach(function (botao) {
+    botao.addEventListener("click", function () { carregarMapa(botao.closest("[data-mapa-src]")); });
+  });
+
+  const consentimento = lerConsentimento();
+  if (consentimento) {
+    aplicarConsentimento(consentimento);
+  } else {
+    mostrarAviso();
+  }
+
   window.Barbearia = { mascararTelefone: mascararTelefone };
 })();

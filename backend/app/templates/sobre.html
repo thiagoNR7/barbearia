@@ -43,9 +43,12 @@
       </table>
       <h3 style="margin-top:1.75rem">Onde estamos</h3>
       <p class="texto-suave">{{ barbearia.endereco }}</p>
-      <iframe class="mapa" loading="lazy" referrerpolicy="no-referrer-when-downgrade"
-              title="Mapa com a localização da barbearia"
-              src="https://www.google.com/maps?q={{ barbearia.endereco|urlencode }}&output=embed"></iframe>
+      {# O mapa é do Google (cookies de terceiros): só carrega com permissão do visitante #}
+      <div class="mapa mapa-bloqueado" data-mapa-src="https://www.google.com/maps?q={{ barbearia.endereco|urlencode }}&output=embed">
+        <p>O mapa é fornecido pelo Google, que pode usar cookies próprios.</p>
+        <button type="button" class="btn btn--pequeno" data-carregar-mapa>Mostrar mapa</button>
+        <a class="texto-pequeno" href="https://www.google.com/maps/search/?api=1&query={{ barbearia.endereco|urlencode }}" target="_blank" rel="noopener">Abrir no Google Maps ↗</a>
+      </div>
     </div>
   </div>
 </section>
