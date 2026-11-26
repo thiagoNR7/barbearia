@@ -99,7 +99,8 @@ def _popular_se_vazio():
     from .models import Servico
 
     if db.session.query(Servico).count() == 0:
-        popular_dados_iniciais()
+        # Sem avaliações de exemplo: num site público elas pareceriam opiniões reais
+        popular_dados_iniciais(com_exemplos=False)
 
 
 def popular_dados_iniciais(com_exemplos=True):

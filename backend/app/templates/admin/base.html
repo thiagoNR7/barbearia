@@ -6,7 +6,15 @@
 <header class="topo">
   <div class="listra"></div>
   <nav class="container nav" aria-label="Painel">
-    <a class="nav__marca" href="{{ url_for('admin.painel') }}">💈 Painel do barbeiro</a>
+    <a class="nav__marca" href="{{ url_for('admin.painel') }}">
+      <svg viewBox="0 0 32 32" aria-hidden="true">
+        <path d="M16 2 28.1 9v14L16 30 3.9 23V9z" fill="currentColor"/>
+        <path d="M16 6.6 24.1 11.3v9.4L16 25.4 7.9 20.7v-9.4z" fill="none" stroke="#111" stroke-width="1.6"/>
+        <path d="M11 20.5 20.8 11.2c.6-.6 1.6-.2 1.6.7v.5L13 21.6z" fill="#111"/>
+        <path d="M10.2 21.3l1.7-1.6 1.2 1.2-1.7 1.6a.85.85 0 0 1-1.2-1.2z" fill="#111"/>
+      </svg>
+      Painel do barbeiro
+    </a>
     {% if session.get('admin') %}
       <button class="nav__menu" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">☰</button>
       <ul class="nav__links" id="menu">

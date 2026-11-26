@@ -11,7 +11,9 @@
           <li>{{ barbearia.endereco }}</li>
           <li><a href="tel:+55{{ barbearia.telefone|replace('(', '')|replace(')', '')|replace(' ', '')|replace('-', '') }}">{{ barbearia.telefone }}</a></li>
           <li><a href="https://wa.me/{{ barbearia.whatsapp }}" target="_blank" rel="noopener">WhatsApp</a></li>
+          {% if barbearia.instagram %}
           <li><a href="https://instagram.com/{{ barbearia.instagram }}" target="_blank" rel="noopener">@{{ barbearia.instagram }}</a></li>
+          {% endif %}
         </ul>
       </div>
       <div>
@@ -28,6 +30,9 @@
     </div>
     <div class="rodape__base">
       © {{ ano_atual }} {{ barbearia.nome }} · Projeto acadêmico de Análise e Desenvolvimento de Sistemas
+      {% if barbearia.ficticia %}
+        <br>Barbearia fictícia, criada para demonstração do projeto. Endereço, telefone e avaliações não são reais.
+      {% endif %}
     </div>
   </div>
 </footer>

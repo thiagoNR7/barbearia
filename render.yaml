@@ -29,12 +29,14 @@ services:
       - key: ADMIN_SENHA
         sync: false   # a Render pede o valor no primeiro deploy
       - key: BARBEARIA_NOME
-        value: Barbearia do Bairro
+        value: Zangão Barbearia
       - key: BARBEARIA_ENDERECO
-        value: Rua Exemplo, 123 - Centro
+        value: Rua das Colmeias, 120 - Vila Mel, São Paulo - SP
       - key: BARBEARIA_TELEFONE
         value: (11) 99999-9999
       - key: BARBEARIA_WHATSAPP
         value: "5511999999999"
       - key: BARBEARIA_INSTAGRAM
-        value: barbeariadobairro
+        value: ""
+      - key: BARBEARIA_FICTICIA
+        value: "1"

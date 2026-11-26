@@ -1,7 +1,8 @@
 /* ==========================================================================
    Barbearia — estilos
-   Conceito: precisão. Aço grafite, um único azul (o do poste de barbeiro),
+   Conceito: precisão. Preto e amarelo (identidade da Zangão Barbearia),
    cantos retos como lâmina e uma "régua" de medição como detalhe de marca.
+   Layout original de um colega do grupo; paleta trocada nas variáveis abaixo.
 
    Fontes (colocar no <head> do base.html, no lugar do link atual do Google Fonts):
    <link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -32,28 +33,28 @@
   color-scheme: dark;
 
   /* Superfícies (aço grafite) */
-  --aco: #171c22;
-  --aco-2: #1e252c;
-  --aco-3: #29323b;
-  --aco-fundo: #12161b;
-  --linha: #35404b;
-  --linha-forte: #4a5766;
+  --aco: #111111;
+  --aco-2: #1a1a1a;
+  --aco-3: #2a2a2a;
+  --aco-fundo: #0a0a0a;
+  --linha: #303030;
+  --linha-forte: #474747;
 
   /* Texto */
-  --texto: #e9eef3;
-  --texto-2: #b4bfca;
-  --texto-3: #8693a1;
+  --texto: #f4f2ea;
+  --texto-2: #c7c3b6;
+  --texto-3: #918d82;
 
-  /* Acento único: azul do poste de barbeiro */
-  --acento: #4da6ff;
-  --acento-claro: #7dbfff;
-  --acento-escuro: #2f86dc;
-  --sobre-acento: #08172a; /* texto sobre fundo azul */
+  /* Acento único: amarelo da marca */
+  --acento: #ffc61a;
+  --acento-claro: #ffd75e;
+  --acento-escuro: #d9a400;
+  --sobre-acento: #111111; /* texto sobre fundo amarelo */
 
   /* Cores de estado (só para status) */
   --vermelho: #e5604a;
   --verde: #4fc08d;
-  --amarelo: #e3b341;
+  --amarelo: #ffc61a;
 
   /* Tipografia */
   --fonte-titulo: "Chakra Petch", "Bahnschrift", "Arial Narrow", sans-serif;
@@ -178,7 +179,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 .secao__topo { text-align: center; max-width: 640px; margin: 0 auto 2.5rem; }
 .secao__topo p { color: var(--texto-2); }
 
-/* Rótulo acima do título: traço azul + texto discreto, sem caixa-alta */
+/* Rótulo acima do título: traço amarelo + texto discreto, sem caixa-alta */
 .sobretitulo {
   display: inline-flex;
   align-items: center;
@@ -203,11 +204,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
 /* Poste de barbeiro: faixa fina decorativa */
 .listra {
   height: 4px;
-  background: repeating-linear-gradient(
-    -45deg,
-    var(--vermelho) 0 10px, var(--texto) 10px 20px,
-    var(--acento) 20px 30px, var(--texto) 30px 40px
-  );
+  background: repeating-linear-gradient(-45deg, var(--acento) 0 10px, #000 10px 20px);
 }
 
 /* 4. Botões
@@ -256,7 +253,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: rgba(23, 28, 34, .94);
+  background: rgba(17, 17, 17, .94);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--linha);
@@ -281,7 +278,7 @@ p { margin: 0 0 1em; text-wrap: pretty; }
   letter-spacing: .03em;
 }
 .nav__marca:hover { text-decoration: none; color: var(--acento-claro); }
-.nav__marca svg { width: 30px; height: 30px; color: var(--acento); flex-shrink: 0; }
+.nav__marca svg { width: 34px; height: 34px; color: var(--acento); flex-shrink: 0; }
 
 .nav__links { display: flex; align-items: center; gap: 1.6rem; list-style: none; margin: 0; padding: 0; }
 .nav__links a:not(.btn),
@@ -460,7 +457,7 @@ input, select, textarea {
   transition: border-color var(--normal), box-shadow var(--normal);
 }
 input:hover, select:hover, textarea:hover { border-color: var(--linha-forte); }
-/* Foco: borda azul + barra inferior, como cursor de medição */
+/* Foco: borda amarela + barra inferior, como cursor de medição */
 input:focus, select:focus, textarea:focus {
   outline: none;
   border-color: var(--acento);
@@ -663,10 +660,10 @@ textarea { resize: vertical; min-height: 90px; }
   border-radius: 1px;
   background: currentColor;
 }
-.etiqueta--confirmado { color: var(--acento-claro); }
+.etiqueta--confirmado { color: #8cc8ff; }
 .etiqueta--concluido { color: var(--verde); }
 .etiqueta--cancelado { color: #f08a78; }
-.etiqueta--faltou { color: var(--amarelo); }
+.etiqueta--faltou { color: #ff9b57; }
 
 .acoes-linha { display: flex; gap: .4rem; flex-wrap: wrap; align-items: center; }
 .acoes-linha form { margin: 0; }
