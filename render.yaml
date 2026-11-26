@@ -29,14 +29,14 @@ services:
       - key: ADMIN_SENHA
         sync: false   # a Render pede o valor no primeiro deploy
       - key: BARBEARIA_NOME
-        value: Zangão Barbearia
+        value: Charme Chave
       - key: BARBEARIA_ENDERECO
-        value: Rua das Colmeias, 120 - Vila Mel, São Paulo - SP
+        value: Rua Bailão, 215 - Jardim Palmares, São Paulo - SP, 02328-060
       - key: BARBEARIA_TELEFONE
         value: (11) 95235-3041
       - key: BARBEARIA_WHATSAPP
         value: "5511952353041"
       - key: BARBEARIA_INSTAGRAM
-        value: ""
+        value: _fabiocortes
       - key: BARBEARIA_FICTICIA
-        value: "1"
+        value: "0"

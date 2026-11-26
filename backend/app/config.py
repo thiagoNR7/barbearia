@@ -40,14 +40,14 @@ class Config:
     ANTECEDENCIA_MIN_MINUTOS = 30
 
     BARBEARIA = {
-        "nome": os.getenv("BARBEARIA_NOME", "Zangão Barbearia"),
-        "endereco": os.getenv("BARBEARIA_ENDERECO", "Rua das Colmeias, 120 - Vila Mel, São Paulo - SP"),
+        "nome": os.getenv("BARBEARIA_NOME", "Charme Chave"),
+        "endereco": os.getenv("BARBEARIA_ENDERECO", "Rua Bailão, 215 - Jardim Palmares, São Paulo - SP, 02328-060"),
         "telefone": os.getenv("BARBEARIA_TELEFONE", "(11) 95235-3041"),
         "whatsapp": os.getenv("BARBEARIA_WHATSAPP", "5511952353041"),
         # Deixe vazio para não exibir link de Instagram
-        "instagram": os.getenv("BARBEARIA_INSTAGRAM", ""),
+        "instagram": os.getenv("BARBEARIA_INSTAGRAM", "_fabiocortes"),
         # "1" = mostra no rodapé que a barbearia é fictícia (projeto acadêmico)
-        "ficticia": os.getenv("BARBEARIA_FICTICIA", "1") == "1",
+        "ficticia": os.getenv("BARBEARIA_FICTICIA", "0") == "1",
     }
 
 

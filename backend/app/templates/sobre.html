@@ -6,7 +6,7 @@
   <div class="container">
     <span class="sobretitulo">Sobre nós</span>
     <h1>{{ barbearia.nome }}</h1>
-    <p>Precisão de navalha e o capricho de quem trabalha como abelha: sem pressa e sem atraso.</p>
+    <p>A barbearia do Fábio no Jardim Palmares, Zona Norte de São Paulo: corte caprichado e hora marcada.</p>
   </div>
 </section>
 
@@ -14,11 +14,11 @@
   <div class="container grade grade--2">
     <div>
       <h2>Nossa história</h2>
-      {# História FICTÍCIA (projeto acadêmico). Troque pela história real se houver um barbeiro parceiro. #}
-      <p class="texto-suave">A {{ barbearia.nome }} nasceu numa salinha de fundos, com uma cadeira, uma máquina e um apelido herdado do bairro: “Zangão”, pelo zumbido da máquina que não parava o dia inteiro.</p>
-      <p class="texto-suave">O nome pegou, o amarelo e preto viraram marca e a clientela cresceu no boca a boca. Hoje o foco continua o mesmo: degradê bem feito, barba alinhada na navalha e pontualidade. Por isso trabalhamos só com hora marcada — você chega e senta na cadeira, sem perder a tarde esperando.</p>
+      {# Texto de apresentação. Revise com o Fábio e acrescente a história dele (desde quando corta, como começou). #}
+      <p class="texto-suave">A {{ barbearia.nome }} é a barbearia do Fábio, na Rua Bailão, no Jardim Palmares. Aqui o foco é simples: degradê bem feito, barba alinhada na navalha e atendimento sem correria.</p>
+      <p class="texto-suave">Para ninguém perder a tarde esperando, o atendimento é com hora marcada: você escolhe o serviço e o horário pelo site, chega e já senta na cadeira. Os trabalhos mais recentes estão no Instagram{% if barbearia.instagram %} <a href="https://instagram.com/{{ barbearia.instagram }}" target="_blank" rel="noopener">@{{ barbearia.instagram }}</a>{% endif %}.</p>
       <div class="destaques">
-        <div class="destaque"><strong>10+</strong><span>anos de experiência</span></div>
+        <div class="destaque"><strong>ZN</strong><span>Jardim Palmares, Zona Norte</span></div>
         <div class="destaque"><strong>100%</strong><span>hora marcada</span></div>
         <div class="destaque"><strong>☕</strong><span>cafezinho por conta da casa</span></div>
       </div>

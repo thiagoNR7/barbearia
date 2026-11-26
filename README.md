@@ -10,7 +10,7 @@
 
 Projeto acadêmico de desenvolvimento de um site para uma barbearia de bairro, com apresentação de serviços, avaliações de clientes, agendamento online e um **painel para o barbeiro** gerenciar a agenda.
 
-> **Barbearia fictícia:** o site está personalizado para a **Zangão Barbearia**, um negócio fictício (identidade amarelo e preto) criado para demonstrar o sistema. Nome, endereço, telefone e história não são reais. Para usar com uma barbearia de verdade, basta trocar as variáveis `BARBEARIA_*` e definir `BARBEARIA_FICTICIA=0`.
+> **Empresa parceira:** barbearia **Charme Chave**, do barbeiro Fábio ([@_fabiocortes](https://instagram.com/_fabiocortes)), na Rua Bailão, 215 – Jardim Palmares, São Paulo/SP. Os dados da barbearia ficam nas variáveis `BARBEARIA_*` (`.env` local e `render.yaml` / Environment da Render).
 
 ## 🎥 Demonstração
 
@@ -180,7 +180,7 @@ Exemplo de `POST /api/agendamentos` (precisa do cabeçalho `X-CSRF-Token`, que o
 
 ## ✏️ Personalizando para o barbeiro
 
-- **Nome, endereço, telefone, WhatsApp, Instagram:** variáveis `BARBEARIA_*` no `.env` (local) ou em `render.yaml` / Environment da Render (no ar). `BARBEARIA_FICTICIA=0` remove o aviso de barbearia fictícia do rodapé.
+- **Nome, endereço, telefone, WhatsApp, Instagram:** variáveis `BARBEARIA_*` no `.env` (local) ou em `render.yaml` / Environment da Render (no ar). `BARBEARIA_FICTICIA=1` mostra no rodapé um aviso de barbearia fictícia (para demonstrações).
 - **Serviços, preços e horários:** pelo próprio painel `/admin` (ou em `popular_dados_iniciais`, em `app/__init__.py`).
 - **Texto "Nossa história":** `app/templates/sobre.html`.
 - **Cores:** variáveis no topo de `app/static/css/style.css` (hoje amarelo `#ffc61a` e preto).
