@@ -32,8 +32,8 @@
             <td>{{ h.nome_dia }}</td>
             <td>
               {% if h.aberto %}
-                {{ h.abertura.strftime('%H:%M') }} – {{ h.fechamento.strftime('%H:%M') }}
-                {% if h.pausa_inicio %}<br><small class="texto-pequeno">pausa {{ h.pausa_inicio.strftime('%H:%M') }}–{{ h.pausa_fim.strftime('%H:%M') }}</small>{% endif %}
+                {{ h.abertura.strftime('%H:%M') }} às {{ h.fechamento.strftime('%H:%M') }}
+                {% if h.pausa_inicio %}<br><small class="texto-pequeno">pausa das {{ h.pausa_inicio.strftime('%H:%M') }} às {{ h.pausa_fim.strftime('%H:%M') }}</small>{% endif %}
               {% else %}
                 Fechado
               {% endif %}

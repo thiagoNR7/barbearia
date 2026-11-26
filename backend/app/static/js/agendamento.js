@@ -33,7 +33,7 @@
   }
 
   function formatarData(iso) {
-    if (!iso) return "—";
+    if (!iso) return "-";
     const [a, m, d] = iso.split("-").map(Number);
     const dt = new Date(a, m - 1, d);
     return DIAS[dt.getDay()] + ", " + String(d).padStart(2, "0") + "/" + String(m).padStart(2, "0");
@@ -46,11 +46,11 @@
 
   function atualizarResumo() {
     const s = servicoSelecionado();
-    resumo.servico.textContent = s ? s.dataset.nome : "—";
-    resumo.duracao.textContent = s ? s.dataset.duracao + " min" : "—";
-    resumo.preco.textContent = s ? s.dataset.preco : "—";
+    resumo.servico.textContent = s ? s.dataset.nome : "-";
+    resumo.duracao.textContent = s ? s.dataset.duracao + " min" : "-";
+    resumo.preco.textContent = s ? s.dataset.preco : "-";
     resumo.data.textContent = formatarData(campoData.value);
-    resumo.hora.textContent = campoHora.value || "—";
+    resumo.hora.textContent = campoHora.value || "-";
   }
 
   function escolherHorario(botaoHorario) {

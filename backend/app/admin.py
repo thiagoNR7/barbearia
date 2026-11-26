@@ -304,7 +304,7 @@ def adicionar_bloqueio():
         )
         msg = f"Dia {dia.strftime('%d/%m/%Y')} bloqueado."
         if afetados:
-            msg += f" Atenção: já existem {afetados} agendamento(s) nesse dia — avise os clientes."
+            msg += f" Atenção: já existem {afetados} agendamento(s) nesse dia. Avise os clientes."
         flash(msg, "ok")
     return redirect(url_for("admin.horarios"))
 

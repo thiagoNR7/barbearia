@@ -17,9 +17,9 @@
         <tr>
           <td data-label="Nome">{{ cliente.nome }}</td>
           <td data-label="Telefone"><a href="https://wa.me/55{{ cliente.telefone }}" target="_blank" rel="noopener">{{ cliente.telefone_formatado }}</a></td>
-          <td data-label="E-mail">{{ cliente.email or '—' }}</td>
+          <td data-label="E-mail">{{ cliente.email or '-' }}</td>
           <td class="num" data-label="Atendimentos">{{ visitas }}</td>
-          <td data-label="Último agendamento">{% if ultimo %}<a href="{{ url_for('admin.painel', data=ultimo.date().isoformat()) }}">{{ ultimo|data_br }}</a>{% else %}—{% endif %}</td>
+          <td data-label="Último agendamento">{% if ultimo %}<a href="{{ url_for('admin.painel', data=ultimo.date().isoformat()) }}">{{ ultimo|data_br }}</a>{% else %}-{% endif %}</td>
         </tr>
       {% else %}
         <tr><td colspan="5" class="vazio">{{ 'Nenhum cliente encontrado.' if busca else 'Os clientes aparecem aqui conforme forem agendando.' }}</td></tr>

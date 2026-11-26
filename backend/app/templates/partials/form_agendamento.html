@@ -70,7 +70,7 @@
                  value="{{ form.get('email', '') }}">
         </div>
         <div class="campo">
-          <label for="campo-obs">Observação <span class="dica">(opcional — ex.: “degradê bem baixo”)</span></label>
+          <label for="campo-obs">Observação <span class="dica">(opcional, ex.: degradê bem baixo)</span></label>
           <textarea id="campo-obs" name="observacao" maxlength="255" rows="2">{{ form.get('observacao', '') }}</textarea>
         </div>
       </div>
@@ -80,11 +80,11 @@
   <aside class="card resumo" aria-label="Resumo do agendamento">
     <h3>Resumo</h3>
     <dl>
-      <dt>Serviço</dt><dd id="resumo-servico">—</dd>
-      <dt>Duração</dt><dd id="resumo-duracao">—</dd>
-      <dt>Data</dt><dd id="resumo-data">—</dd>
-      <dt>Horário</dt><dd id="resumo-hora">—</dd>
-      <dt>Total</dt><dd id="resumo-preco" class="resumo__total">—</dd>
+      <dt>Serviço</dt><dd id="resumo-servico">-</dd>
+      <dt>Duração</dt><dd id="resumo-duracao">-</dd>
+      <dt>Data</dt><dd id="resumo-data">-</dd>
+      <dt>Horário</dt><dd id="resumo-hora">-</dd>
+      <dt>Total</dt><dd id="resumo-preco" class="resumo__total">-</dd>
     </dl>
     <p id="form-erro" class="mensagem mensagem--erro" role="alert" hidden></p>
     <button type="submit" class="btn btn--bloco" id="botao-confirmar">Confirmar agendamento</button>

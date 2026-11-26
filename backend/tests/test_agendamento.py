@@ -77,7 +77,7 @@ def test_agendar_e_impedir_duplicado(client):
 
 def test_sobreposicao_parcial_bloqueada(client):
     combo = db.session.query(Servico).filter_by(nome="Corte + Barba").one()
-    assert agendar(client, "15:00", servico=combo).status_code == 201   # 15:00–16:00
+    assert agendar(client, "15:00", servico=combo).status_code == 201   # 15:00 às 16:00
     assert agendar(client, "15:30").status_code == 422                   # cairia no meio
     assert agendar(client, "16:00").status_code == 201
 

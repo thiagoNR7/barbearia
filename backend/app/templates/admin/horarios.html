@@ -51,7 +51,7 @@
     <h3>Próximos dias bloqueados</h3>
     {% for b in bloqueios %}
       <div class="acoes-linha" style="justify-content:space-between;padding:.5rem 0;border-bottom:1px solid var(--linha)">
-        <span>{{ b.data|dia_semana }}, {{ b.data|data_br }}{{ ' — ' ~ b.motivo if b.motivo }}</span>
+        <span>{{ b.data|dia_semana }}, {{ b.data|data_br }}{{ ' (' ~ b.motivo ~ ')' if b.motivo }}</span>
         <form method="post" action="{{ url_for('admin.remover_bloqueio', bloqueio_id=b.id) }}">
           <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
           <button class="btn btn--pequeno btn--contorno" type="submit">Desbloquear</button>

@@ -1,4 +1,4 @@
-# 💈 Barbearia — Sistema de Agendamento
+# 💈 Charme Chave: Sistema de Agendamento
 
 <p align="center">
   Sistema web para apresentação de serviços e agendamento de horários em uma barbearia.
@@ -10,7 +10,7 @@
 
 Projeto acadêmico de desenvolvimento de um site para uma barbearia de bairro, com apresentação de serviços, avaliações de clientes, agendamento online e um **painel para o barbeiro** gerenciar a agenda.
 
-> **Empresa parceira:** barbearia **Charme Chave**, do barbeiro Fábio ([@_fabiocortes](https://instagram.com/_fabiocortes)), na Rua Bailão, 215 – Jardim Palmares, São Paulo/SP. Os dados da barbearia ficam nas variáveis `BARBEARIA_*` (`.env` local e `render.yaml` / Environment da Render).
+> **Empresa parceira:** barbearia **Charme Chave**, do barbeiro Fábio ([@_fabiocortes](https://instagram.com/_fabiocortes)), na Rua Bailão, 215, Jardim Palmares, São Paulo/SP. Os dados da barbearia ficam nas variáveis `BARBEARIA_*` (`.env` local e `render.yaml` / Environment da Render).
 
 ## 🎥 Demonstração
 
@@ -88,7 +88,7 @@ python run.py
 
 Abra **http://127.0.0.1:5000**. Na primeira execução o banco (`backend/instance/barbearia.db`) é criado com serviços, horários e avaliações de exemplo.
 
-Painel do barbeiro: **http://127.0.0.1:5000/admin** — usuário e senha são os definidos em `ADMIN_USUARIO` e `ADMIN_SENHA` no `.env`.
+Painel do barbeiro: **http://127.0.0.1:5000/admin**. O usuário e a senha são os definidos em `ADMIN_USUARIO` e `ADMIN_SENHA` no `.env`.
 
 Comandos úteis (dentro de `backend/`, com o venv ativo):
 
@@ -141,7 +141,7 @@ dias_bloqueados         (feriados e folgas)
 | `clientes` | Nome, telefone (único) e e-mail |
 | `servicos` | Nome, descrição, preço, duração, ativo/oculto |
 | `agendamentos` | Cliente, serviço, início, fim, preço cobrado, status (`confirmado`, `concluido`, `cancelado`, `faltou`) e código do link de confirmação |
-| `avaliacoes` | Nome, nota (1–5, com CHECK no banco), comentário, visível |
+| `avaliacoes` | Nome, nota (1 a 5, com CHECK no banco), comentário, visível |
 | `horarios_funcionamento` | Abertura, fechamento e pausa de cada dia |
 | `dias_bloqueados` | Datas sem atendimento e motivo |
 
@@ -160,7 +160,7 @@ dias_bloqueados         (feriados e folgas)
 | GET | `/api/horarios?data=AAAA-MM-DD&servico_id=1` | Horários livres (JSON) |
 | POST | `/api/agendamentos` | Criar agendamento (JSON) |
 | GET | `/admin/` | Painel: agenda do dia |
-| — | `/admin/servicos`, `/admin/horarios`, `/admin/clientes`, `/admin/avaliacoes` | Gestão |
+| GET/POST | `/admin/servicos`, `/admin/horarios`, `/admin/clientes`, `/admin/avaliacoes` | Gestão |
 
 Exemplo de `POST /api/agendamentos` (precisa do cabeçalho `X-CSRF-Token`, que o site já envia):
 
@@ -175,7 +175,7 @@ Exemplo de `POST /api/agendamentos` (precisa do cabeçalho `X-CSRF-Token`, que o
 3. Informe a `ADMIN_SENHA` quando a Render pedir e ajuste nome, endereço, telefone e WhatsApp da barbearia nas variáveis de ambiente.
 
 ### 🔐 Cuidados
-- O `.env` está no `.gitignore` — nunca envie senhas para o GitHub.
+- O `.env` está no `.gitignore`. Nunca envie senhas para o GitHub.
 - Em produção, `SECRET_KEY` é gerada pela Render e o banco é PostgreSQL.
 
 ## ✏️ Personalizando para o barbeiro
