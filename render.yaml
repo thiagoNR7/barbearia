@@ -33,9 +33,9 @@ services:
       - key: BARBEARIA_ENDERECO
         value: Rua das Colmeias, 120 - Vila Mel, São Paulo - SP
       - key: BARBEARIA_TELEFONE
-        value: (11) 99999-9999
+        value: (11) 95235-3041
       - key: BARBEARIA_WHATSAPP
-        value: "5511999999999"
+        value: "5511952353041"
       - key: BARBEARIA_INSTAGRAM
         value: ""
       - key: BARBEARIA_FICTICIA

@@ -42,8 +42,8 @@ class Config:
     BARBEARIA = {
         "nome": os.getenv("BARBEARIA_NOME", "Zangão Barbearia"),
         "endereco": os.getenv("BARBEARIA_ENDERECO", "Rua das Colmeias, 120 - Vila Mel, São Paulo - SP"),
-        "telefone": os.getenv("BARBEARIA_TELEFONE", "(11) 99999-9999"),
-        "whatsapp": os.getenv("BARBEARIA_WHATSAPP", "5511999999999"),
+        "telefone": os.getenv("BARBEARIA_TELEFONE", "(11) 95235-3041"),
+        "whatsapp": os.getenv("BARBEARIA_WHATSAPP", "5511952353041"),
         # Deixe vazio para não exibir link de Instagram
         "instagram": os.getenv("BARBEARIA_INSTAGRAM", ""),
         # "1" = mostra no rodapé que a barbearia é fictícia (projeto acadêmico)
