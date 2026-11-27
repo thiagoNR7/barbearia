@@ -26,14 +26,14 @@ Painel do barbeiro: https://barbearia-2pso.onrender.com/admin
 
 ## 👥 Integrantes
 
-| Nome | RA | Curso |
-|---|---|---|
-| Thiago Novato Ramalho | 324200905 | ADS |
-| Thiago Duarte Rebola | 424201906 | ADS |
-| Henrique de Jesus Carvalho | 424105822 | ADS |
-| Jerry Sint Jean | 3024106925 | ADS |
-| Cristo Paulo Kiala Castelo | 426104467 | ADS |
-| Vitor Guilherme da Costa Pereira | 424203940 | ADS |
+| Nome | Curso |
+|---|---|
+| Thiago Novato Ramalho | ADS |
+| Thiago Duarte Rebola | ADS |
+| Henrique de Jesus Carvalho | ADS |
+| Jerry Sint Jean | ADS |
+| Cristo Paulo Kiala Castelo | ADS |
+| Vitor Guilherme da Costa Pereira | ADS |
 
 ## ✨ Funcionalidades
 
