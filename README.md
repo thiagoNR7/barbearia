@@ -24,6 +24,17 @@ Painel do barbeiro: https://barbearia-2pso.onrender.com/admin
 
 (O servidor gratuito "dorme" após 15 minutos sem acesso; o primeiro carregamento pode levar até 1 minuto.)
 
+## 👥 Integrantes
+
+| Nome | RA | Curso |
+|---|---|---|
+| Thiago Novato Ramalho | 324200905 | ADS |
+| Thiago Duarte Rebola | 424201906 | ADS |
+| Henrique de Jesus Carvalho | 424105822 | ADS |
+| Jerry Sint Jean | 3024106925 | ADS |
+| Cristo Paulo Kiala Castelo | 426104467 | ADS |
+| Vitor Guilherme da Costa Pereira | 424203940 | ADS |
+
 ## ✨ Funcionalidades
 
 **Para o cliente**
