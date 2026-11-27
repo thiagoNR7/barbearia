@@ -46,6 +46,30 @@
 <section class="secao secao--alt">
   <div class="container">
     <div class="secao__topo">
+      <span class="sobretitulo">Trabalhos</span>
+      <h2>Cortes da casa</h2>
+      <p>Alguns trabalhos recentes do Fábio.{% if barbearia.instagram %} Veja mais no Instagram <a href="https://instagram.com/{{ barbearia.instagram }}" target="_blank" rel="noopener">@{{ barbearia.instagram }}</a>.{% endif %}</p>
+    </div>
+    <div class="galeria">
+      {% for arquivo, legenda in [
+        ('degrade-social.jpg', 'Degradê com risca lateral'),
+        ('penteado-ondulado.jpg', 'Corte e penteado'),
+        ('degrade-navalhado.jpg', 'Degradê com acabamento na navalha'),
+        ('nuca-degrade.jpg', 'Degradê na nuca'),
+        ('barba-navalha.jpg', 'Acabamento na navalha'),
+      ] %}
+        <figure class="galeria__item">
+          <img src="{{ url_for('static', filename='img/cortes/' ~ arquivo) }}" alt="{{ legenda }}" width="640" height="800" loading="lazy">
+          <figcaption>{{ legenda }}</figcaption>
+        </figure>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="secao">
+  <div class="container">
+    <div class="secao__topo">
       <span class="sobretitulo">Como funciona</span>
       <h2>Agendar é simples</h2>
     </div>
