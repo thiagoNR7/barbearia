@@ -109,29 +109,29 @@ def popular_dados_iniciais(com_exemplos=True):
     from .models import Avaliacao, HorarioFuncionamento, Servico
 
     if db.session.query(Servico).count() == 0:
+        # Serviços e preços da Charme Chave (duração estimada; ajuste pelo painel se precisar)
         servicos = [
-            ("Corte de cabelo", "Corte na máquina e tesoura, com acabamento e finalização.", "40.00", 30),
-            ("Barba", "Barba modelada com toalha quente e navalha.", "30.00", 30),
-            ("Corte + Barba", "O combo completo com desconto.", "60.00", 60),
-            ("Pezinho / Acabamento", "Contorno e acabamento entre um corte e outro.", "15.00", 15),
-            ("Sobrancelha", "Limpeza e alinhamento na navalha.", "15.00", 15),
-            ("Corte infantil", "Para crianças até 12 anos.", "35.00", 30),
-            ("Pigmentação", "Pigmentação de barba ou cabelo para disfarçar falhas.", "35.00", 30),
-            ("Luzes / Platinado", "Descoloração completa. Consulte antes pelo WhatsApp.", "120.00", 120),
+            ("Corte degradê", "Degradê na máquina com acabamento na navalha.", "40.00", 30),
+            ("Corte degradê e sobrancelha", "Degradê com sobrancelha alinhada na navalha.", "45.00", 40),
+            ("Corte e escova", "Corte com escova e finalização.", "50.00", 45),
+            ("Corte e pigmentação", "Corte com pigmentação para destacar o desenho.", "50.00", 60),
+            ("Corte e penteado", "Corte com penteado para ocasiões especiais.", "70.00", 60),
+            ("Corte e barba", "Corte completo com barba modelada.", "70.00", 60),
         ]
         for ordem, (nome, desc, preco, dur) in enumerate(servicos):
             db.session.add(Servico(nome=nome, descricao=desc, preco=preco, duracao_minutos=dur, ordem=ordem))
 
     if db.session.query(HorarioFuncionamento).count() == 0:
+        # Charme Chave: terça a quinta 10h às 20h; sexta e sábado 7h às 20h;
+        # domingo e segunda fechado (0 = segunda ... 6 = domingo)
         for dia in range(7):
-            if dia == 6:  # domingo
+            if dia in (0, 6):
                 db.session.add(HorarioFuncionamento(dia_semana=dia, aberto=False,
-                                                    abertura=time(9), fechamento=time(13)))
-            elif dia == 5:  # sábado
-                db.session.add(HorarioFuncionamento(dia_semana=dia, abertura=time(8), fechamento=time(17)))
+                                                    abertura=time(10), fechamento=time(20)))
+            elif dia in (4, 5):
+                db.session.add(HorarioFuncionamento(dia_semana=dia, abertura=time(7), fechamento=time(20)))
             else:
-                db.session.add(HorarioFuncionamento(dia_semana=dia, abertura=time(9), fechamento=time(19),
-                                                    pausa_inicio=time(12), pausa_fim=time(13)))
+                db.session.add(HorarioFuncionamento(dia_semana=dia, abertura=time(10), fechamento=time(20)))
 
     if com_exemplos and db.session.query(Avaliacao).count() == 0:
         exemplos = [

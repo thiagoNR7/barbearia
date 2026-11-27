@@ -31,12 +31,12 @@ services:
       - key: BARBEARIA_NOME
         value: Charme Chave
       - key: BARBEARIA_ENDERECO
-        value: Rua Bailão, 215 - Jardim Palmares, São Paulo - SP, 02328-060
+        value: Rua Bailão, 642, Jardim Palmares, São Paulo/SP, 02328-060
       - key: BARBEARIA_TELEFONE
         value: (11) 95235-3041
       - key: BARBEARIA_WHATSAPP
         value: "5511952353041"
       - key: BARBEARIA_INSTAGRAM
-        value: _fabiocortes
+        value: _fabiocortess
       - key: BARBEARIA_FICTICIA
         value: "0"

@@ -41,11 +41,11 @@ class Config:
 
     BARBEARIA = {
         "nome": os.getenv("BARBEARIA_NOME", "Charme Chave"),
-        "endereco": os.getenv("BARBEARIA_ENDERECO", "Rua Bailão, 215 - Jardim Palmares, São Paulo - SP, 02328-060"),
+        "endereco": os.getenv("BARBEARIA_ENDERECO", "Rua Bailão, 642, Jardim Palmares, São Paulo/SP, 02328-060"),
         "telefone": os.getenv("BARBEARIA_TELEFONE", "(11) 95235-3041"),
         "whatsapp": os.getenv("BARBEARIA_WHATSAPP", "5511952353041"),
         # Deixe vazio para não exibir link de Instagram
-        "instagram": os.getenv("BARBEARIA_INSTAGRAM", "_fabiocortes"),
+        "instagram": os.getenv("BARBEARIA_INSTAGRAM", "_fabiocortess"),
         # "1" = mostra no rodapé que a barbearia é fictícia (projeto acadêmico)
         "ficticia": os.getenv("BARBEARIA_FICTICIA", "0") == "1",
     }

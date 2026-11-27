@@ -10,7 +10,7 @@
 
 Projeto acadêmico de desenvolvimento de um site para uma barbearia de bairro, com apresentação de serviços, avaliações de clientes, agendamento online e um **painel para o barbeiro** gerenciar a agenda.
 
-> **Empresa parceira:** barbearia **Charme Chave**, do barbeiro Fábio ([@_fabiocortes](https://instagram.com/_fabiocortes)), na Rua Bailão, 215, Jardim Palmares, São Paulo/SP. Os dados da barbearia ficam nas variáveis `BARBEARIA_*` (`.env` local e `render.yaml` / Environment da Render).
+> **Empresa parceira:** barbearia **Charme Chave**, do barbeiro Fábio ([@_fabiocortess](https://instagram.com/_fabiocortess)), na Rua Bailão, 642, Jardim Palmares, São Paulo/SP. Os dados da barbearia ficam nas variáveis `BARBEARIA_*` (`.env` local e `render.yaml` / Environment da Render).
 
 ## 🎥 Demonstração
 

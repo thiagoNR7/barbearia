@@ -1,5 +1,5 @@
 """Testes automatizados. Rode dentro da pasta backend:  python -m pytest -v"""
-from datetime import datetime
+from datetime import datetime, time
 
 import pytest
 
@@ -33,7 +33,7 @@ def client(app):
 
 
 def corte():
-    return db.session.query(Servico).filter_by(nome="Corte de cabelo").one()
+    return db.session.query(Servico).filter_by(nome="Corte degradê").one()
 
 
 def agendar(client, hora="10:00", servico=None, telefone="(11) 91234-5678", data=DIA):
@@ -50,19 +50,31 @@ def test_paginas_publicas_abrem(client):
         assert client.get(url).status_code == 200, url
 
 
-def test_horarios_respeitam_expediente_e_pausa(client):
+def test_horarios_respeitam_expediente(client):
+    # Terça: 10h às 20h, sem pausa
     r = client.get(f"/api/horarios?data={DIA}&servico_id={corte().id}").get_json()
-    assert r["horarios"][0] == "09:00"
-    assert r["horarios"][-1] == "18:30"          # 18:30 + 30 min = 19:00 (fechamento)
-    assert "12:00" not in r["horarios"]          # pausa de almoço
-    assert "11:30" in r["horarios"]
+    assert r["horarios"][0] == "10:00"
+    assert r["horarios"][-1] == "19:30"          # 19:30 + 30 min = 20:00 (fechamento)
+    assert "09:30" not in r["horarios"]
+    assert "13:00" in r["horarios"]
 
 
-def test_servico_longo_nao_invade_pausa(client):
-    combo = db.session.query(Servico).filter_by(nome="Corte + Barba").one()  # 60 min
+def test_servico_longo_nao_passa_do_fechamento(client):
+    combo = db.session.query(Servico).filter_by(nome="Corte e barba").one()  # 60 min
     r = client.get(f"/api/horarios?data={DIA}&servico_id={combo.id}").get_json()
-    assert "11:30" not in r["horarios"]          # terminaria 12:30, dentro da pausa
-    assert "11:00" in r["horarios"]
+    assert "19:30" not in r["horarios"]          # terminaria 20:30, depois do fechamento
+    assert "19:00" in r["horarios"]
+
+
+def test_pausa_cadastrada_bloqueia_horarios(client):
+    from app.models import HorarioFuncionamento
+    terca = db.session.query(HorarioFuncionamento).filter_by(dia_semana=1).one()
+    terca.pausa_inicio, terca.pausa_fim = time(13), time(14)
+    db.session.commit()
+    combo = db.session.query(Servico).filter_by(nome="Corte e barba").one()  # 60 min
+    r = client.get(f"/api/horarios?data={DIA}&servico_id={combo.id}").get_json()
+    assert "13:00" not in r["horarios"] and "12:30" not in r["horarios"]
+    assert "12:00" in r["horarios"] and "14:00" in r["horarios"]
 
 
 def test_agendar_e_impedir_duplicado(client):
@@ -76,7 +88,7 @@ def test_agendar_e_impedir_duplicado(client):
 
 
 def test_sobreposicao_parcial_bloqueada(client):
-    combo = db.session.query(Servico).filter_by(nome="Corte + Barba").one()
+    combo = db.session.query(Servico).filter_by(nome="Corte e barba").one()
     assert agendar(client, "15:00", servico=combo).status_code == 201   # 15:00 às 16:00
     assert agendar(client, "15:30").status_code == 422                   # cairia no meio
     assert agendar(client, "16:00").status_code == 201
@@ -90,11 +102,13 @@ def test_domingo_fechado_e_dia_bloqueado(client):
     assert r["horarios"] == [] and "Feriado" in r["motivo"]
 
 
-def test_nao_agenda_no_passado_nem_em_cima_da_hora(client):
-    assert agendar(client, "10:00", data="2026-11-15").status_code == 422
-    assert agendar(client, "08:00", data="2026-11-16").status_code == 422  # abre às 9, e é "agora"
-    r = client.get(f"/api/horarios?data=2026-11-16&servico_id={corte().id}").get_json()
-    assert r["horarios"][0] == "09:00"
+def test_nao_agenda_no_passado_nem_em_cima_da_hora(client, monkeypatch):
+    assert agendar(client, "10:00", data="2026-11-15").status_code == 422  # já passou
+    assert agendar(client, "10:00", data="2026-11-16").status_code == 422  # segunda: fechado
+    # Sexta 20/11 às 07:10: 07:00 já passou e 07:30 está a menos de 30 min
+    monkeypatch.setattr(agenda, "agora", lambda: datetime(2026, 11, 20, 7, 10))
+    r = client.get(f"/api/horarios?data=2026-11-20&servico_id={corte().id}").get_json()
+    assert r["horarios"][0] == "08:00"
 
 
 def test_validacoes_de_dados(client):
